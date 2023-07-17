@@ -2,7 +2,12 @@
   "name": "@snarbanking-workspace/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build:sb-app": "nx build snarbanking-app",
+    "start:sb-app": "nx serve snarbanking-app",
+    "lint:sb-app": "nx lint snarbanking-app",
+    "e2e:sb-app": "nx test snarbanking-app"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.1.0",
