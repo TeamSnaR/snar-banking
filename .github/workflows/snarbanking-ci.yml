@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_call:
 
 jobs:
   main:
@@ -21,6 +22,8 @@ jobs:
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
+      artifacts-path: dist
+      artifacts-name: snarbanking-artifacts
 
   agents:
     name: Nx Cloud - Agents

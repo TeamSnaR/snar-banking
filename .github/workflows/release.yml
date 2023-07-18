@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Environment
+        options:
+          - TEST
+          - PROD
+
+jobs:
+  build:
+    name: Build artifacts
+    uses: ./.github/workflows/snarbanking-ci.yml
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: snarbanking-artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R
