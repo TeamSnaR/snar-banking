@@ -6,6 +6,7 @@ on:
       name:
         type: choice
         description: Environment
+        default: TEST
         options:
           - TEST
           - PROD
