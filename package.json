@@ -6,7 +6,7 @@
     "build:sb-app": "nx build snarbanking-app",
     "start:sb-app": "nx serve snarbanking-app",
     "lint:sb-app": "nx lint snarbanking-app",
-    "e2e:sb-app": "nx test snarbanking-app"
+    "e2e:sb-app": "nx e2e snarbanking-app-e2e"
   },
   "private": true,
   "dependencies": {
