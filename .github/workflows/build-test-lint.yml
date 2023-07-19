@@ -1,4 +1,4 @@
-name: snarbanking-ci
+name: 'Build Test Lint'
 
 on:
   push:
