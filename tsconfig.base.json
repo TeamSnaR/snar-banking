@@ -20,7 +20,8 @@
       ],
       "@snarbanking-workspace/shell/ui/header": [
         "libs/shell/ui/header/src/index.ts"
-      ]
+      ],
+      "@snarbanking-workspace/shell/ui/nav": ["libs/shell/ui/nav/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
