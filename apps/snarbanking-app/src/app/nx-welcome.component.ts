@@ -755,7 +755,7 @@ import { CommonModule } from '@angular/common';
                 />
               </svg>
               <span>
-                Nx is open source
+                Nx is open source!!!
                 <span> Love Nx? Give us a star! </span>
               </span>
             </a>
