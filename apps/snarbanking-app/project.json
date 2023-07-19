@@ -2,7 +2,7 @@
   "name": "snarbanking-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "snarbanking",
+  "prefix": "snarbanking-app",
   "sourceRoot": "apps/snarbanking-app/src",
   "tags": [],
   "targets": {
