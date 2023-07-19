@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "snarbanking-app",
   "sourceRoot": "apps/snarbanking-app/src",
-  "tags": [],
+  "tags": ["scope:snarbanking-app", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
