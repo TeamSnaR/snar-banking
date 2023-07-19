@@ -3,3 +3,5 @@
 [![Release](https://github.com/TeamSnaR/snarbanking-workspace/actions/workflows/release.yml/badge.svg)](https://github.com/TeamSnaR/snarbanking-workspace/actions/workflows/release.yml)
 
 # Snar Banking
+
+A banking app
