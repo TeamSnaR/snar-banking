@@ -7,7 +7,7 @@
     "start:sb-app": "nx serve snarbanking-app",
     "e2e:sb-app": "nx e2e snarbanking-app-e2e",
     "lint:all": "nx run-many --target=lint",
-    "test:all": "nx run-many --target=test"
+    "test:all": "nx run-many --target=test",
     "affected:build": "nx affected --target=build",
     "affected:lint": "nx affected --target=lint",
     "affected:test": "nx affected --target=test"
