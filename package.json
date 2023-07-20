@@ -7,7 +7,10 @@
     "start:sb-app": "nx serve snarbanking-app",
     "lint:sb-app": "nx lint snarbanking-app",
     "test:sb-app": "nx test snarbanking-app",
-    "e2e:sb-app": "nx e2e snarbanking-app-e2e"
+    "e2e:sb-app": "nx e2e snarbanking-app-e2e",
+    "affected:build": "nx affected --target=build",
+    "affected:lint": "nx affected --target=lint",
+    "affected:test": "nx affected --target=test"
   },
   "private": true,
   "dependencies": {
