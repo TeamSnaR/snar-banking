@@ -2,9 +2,9 @@
   "name": "snarbanking-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "snarbanking-workspace",
+  "prefix": "snarbanking-app",
   "sourceRoot": "apps/snarbanking-app/src",
-  "tags": [],
+  "tags": ["scope:snarbanking-app", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
