@@ -14,7 +14,11 @@
             "depConstraints": [
               {
                 "sourceTag": "scope:snarbanking-app",
-                "onlyDependOnLibsWithTags": ["scope:shell", "scope:shared"]
+                "onlyDependOnLibsWithTags": [
+                  "scope:shell",
+                  "scope:shared",
+                  "scope:expenses"
+                ]
               },
               {
                 "sourceTag": "scope:shell",
