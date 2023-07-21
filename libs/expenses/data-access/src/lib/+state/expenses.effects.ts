@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, catchError, of, concatMap, map } from 'rxjs';
+import { catchError, of, concatMap, map } from 'rxjs';
 import * as ExpensesActions from './expenses.actions';
-import * as ExpensesFeature from './expenses.reducer';
-import { ExpensesService } from '@snarbanking-workspace/expenses/data-access';
 import { ExpensesEntity } from './expenses.models';
+import { ExpensesService } from '../expenses.service';
 
 @Injectable()
 export class ExpensesEffects {

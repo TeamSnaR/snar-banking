@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { ExpensesState } from './+state/expenses.reducer';
-import * as fromSelectors from './+state/expenses.selectors';
-import * as fromActions from './+state/expenses.actions';
+import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
+import * as fromActions from '@snarbanking-workspace/expenses/data-access';
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-view',
   standalone: true,
@@ -20,7 +19,7 @@ import * as fromActions from './+state/expenses.actions';
 })
 export class ExpensesFeatureViewComponent {
   public vm$ = this.expensesStore.select(fromSelectors.selectExpensesVm);
-  constructor(public expensesStore: Store<ExpensesState>) {
+  constructor(public expensesStore: Store) {
     this.expensesStore.dispatch(fromActions.initExpenses());
   }
 }

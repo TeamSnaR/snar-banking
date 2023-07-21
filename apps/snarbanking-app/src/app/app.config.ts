@@ -4,17 +4,18 @@ import {
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
 import { provideStore } from '@ngrx/store';
-import { expensesReducer } from '@snarbanking-workspace/expenses/feature-view';
 import { shellFeatureRoutes } from '@snarbanking-workspace/shell/feature';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(shellFeatureRoutes, withEnabledBlockingInitialNavigation()),
-    provideStore({ expenses: expensesReducer }),
+    provideStore({}),
+    provideEffects(),
     provideHttpClient(withInterceptorsFromDi()),
   ],
 };

@@ -10,5 +10,5 @@ export const loadExpensesSuccess = createAction(
 
 export const loadExpensesFailure = createAction(
   '[Expenses/API] Load Expenses Failure',
-  props<{ error: any }>()
+  props<{ error: string }>()
 );

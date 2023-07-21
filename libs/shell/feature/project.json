@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shell/feature/src",
   "prefix": "snarbanking-workspace",
-  "tags": ["scope:shell", "type:feature"],
+  "tags": ["scope:shell", "type:shell"],
   "projectType": "library",
   "targets": {
     "test": {
