@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@snarbanking-workspace/expenses/feature-view": [
+        "libs/expenses/feature-view/src/index.ts"
+      ],
       "@snarbanking-workspace/shell/feature": [
         "libs/shell/feature/src/index.ts"
       ],

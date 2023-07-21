@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'snarbanking-workspace-shell-ui-nav',
+  selector: 'snarbanking-workspace-expenses-feature-view',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './shell-ui-nav.component.html',
+  imports: [CommonModule],
+  templateUrl: './expenses-feature-view.component.html',
   styles: [
     `
       :host {
@@ -16,4 +15,4 @@ import { RouterModule } from '@angular/router';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShellUiNavComponent {}
+export class ExpensesFeatureViewComponent {}
