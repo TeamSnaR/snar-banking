@@ -1,34 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { switchMap, catchError, of } from 'rxjs';
+import { switchMap, catchError, of, concatMap, map } from 'rxjs';
 import * as ExpensesActions from './expenses.actions';
 import * as ExpensesFeature from './expenses.reducer';
+import { ExpensesService } from '@snarbanking-workspace/expenses/data-access';
+import { ExpensesEntity } from './expenses.models';
 
 @Injectable()
 export class ExpensesEffects {
   private actions$ = inject(Actions);
-
+  private expensesService = inject(ExpensesService);
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExpensesActions.initExpenses),
-      switchMap(() =>
-        of(
-          ExpensesActions.loadExpensesSuccess({
-            expenses: [
-              {
-                id: 'abc123',
-                description: 'Aptamil',
-                amount: {
-                  currency: 'GBP',
-                  value: 11.65,
-                },
-                category: 'Grocery',
-                store: "Saver's",
-                items: [],
-              },
-            ],
-          })
-        )
+      concatMap(() =>
+        this.expensesService
+          .getExpenses()
+          .pipe(
+            map((expenses: ExpensesEntity[]) =>
+              ExpensesActions.loadExpensesSuccess({ expenses })
+            )
+          )
       ),
       catchError((error) => {
         console.error('Error', error);

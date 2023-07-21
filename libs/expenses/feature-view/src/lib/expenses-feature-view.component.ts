@@ -20,12 +20,6 @@ import * as fromActions from './+state/expenses.actions';
 })
 export class ExpensesFeatureViewComponent {
   public vm$ = this.expensesStore.select(fromSelectors.selectExpensesVm);
-
-  // {
-  //   expenses: this.expensesStore.select(fromSelectors.selectAllExpenses),
-  //   loaded: this.expensesStore.select(fromSelectors.selectExpensesLoaded),
-  //   error: this.expensesStore.select(fromSelectors.selectExpensesLoaded),
-  // };
   constructor(public expensesStore: Store<ExpensesState>) {
     this.expensesStore.dispatch(fromActions.initExpenses());
   }

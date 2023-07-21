@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@snarbanking-workspace/expenses/data-access": [
+        "libs/expenses/data-access/src/index.ts"
+      ],
       "@snarbanking-workspace/expenses/feature-view": [
         "libs/expenses/feature-view/src/index.ts"
       ],

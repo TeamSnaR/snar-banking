@@ -51,6 +51,10 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "snarbanking-app:build",
+        "proxyConfig": "apps/snarbanking-app/src/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "browserTarget": "snarbanking-app:build:production"
