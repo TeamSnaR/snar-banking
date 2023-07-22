@@ -20,9 +20,9 @@
             <table class="w-full text-left">
               <thead class="sr-only">
                 <tr>
+                  <th>Description</th>
+                  <th class="hidden sm:table-cell">Store</th>
                   <th>Amount</th>
-                  <th class="hidden sm:table-cell">Client</th>
-                  <th>More details</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,10 +65,7 @@
                           </div>
                         </div>
                         <div class="mt-1 text-xs leading-5 text-gray-500">
-                          {{
-                            expense.amount.value
-                              | currency : expense.amount.currency
-                          }}
+                          {{ expense.id }}
                         </div>
                       </div>
                     </div>
@@ -84,15 +81,18 @@
                       {{ expense.category }}
                     </div>
                     <div class="mt-1 text-xs leading-5 text-gray-500">
-                      &nbsp;
+                      {{ expense.store }}
                     </div>
                   </td>
                   <td class="py-5">
                     <div class="flex">
-                      {{ expense.store }}
+                      {{
+                        expense.amount.value
+                          | currency : expense.amount.currency
+                      }}
                     </div>
                     <div class="mt-1 text-xs leading-5 text-gray-500">
-                      {{ expense.id }}
+                      {{ expense.items.length }} items
                     </div>
                   </td>
                 </tr>
