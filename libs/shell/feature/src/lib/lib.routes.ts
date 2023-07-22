@@ -13,6 +13,13 @@ export const shellFeatureRoutes: Route[] = [
             (m) => m.expensesFeatureViewRoutes
           ),
       },
+      {
+        path: 'expenses/:id',
+        loadChildren: () =>
+          import('@snarbanking-workspace/expenses/feature-details').then(
+            (m) => m.expensesFeatureDetailsRoutes
+          ),
+      },
     ],
   },
 ];
