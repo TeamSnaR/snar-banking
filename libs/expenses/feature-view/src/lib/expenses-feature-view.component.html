@@ -1,0 +1,106 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <ng-container *ngIf="!vm.loaded; else showResult"> </ng-container>
+  <ng-template #showResult>
+    <ng-container *ngIf="vm.error; else showExpenses">
+      Error has occurred: {{ vm.error }}
+    </ng-container>
+  </ng-template>
+  <ng-template #showExpenses>
+    <div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2
+          class="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none"
+        >
+          Recent activity
+        </h2>
+      </div>
+      <div class="mt-6 overflow-hidden border-t border-gray-100">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+            <table class="w-full text-left">
+              <thead class="sr-only">
+                <tr>
+                  <th>Description</th>
+                  <th class="hidden sm:table-cell">Store</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-sm leading-6 text-gray-900">
+                  <th
+                    scope="colgroup"
+                    colspan="3"
+                    class="relative isolate py-2 font-semibold"
+                  >
+                    <time datetime="2023-03-22">Today</time>
+                    <div
+                      class="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50"
+                    ></div>
+                    <div
+                      class="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50"
+                    ></div>
+                  </th>
+                </tr>
+                <tr *ngFor="let expense of vm.expenses">
+                  <td class="relative py-5 pr-6">
+                    <div class="flex gap-x-6">
+                      <svg
+                        class="hidden h-6 w-5 flex-none text-gray-400 sm:block"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-4.75a.75.75 0 001.5 0V8.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0L6.2 9.74a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <div class="flex-auto">
+                        <div class="flex items-start gap-x-3">
+                          <div
+                            class="text-sm font-medium leading-6 text-gray-900"
+                          >
+                            {{ expense.description }}
+                          </div>
+                        </div>
+                        <div class="mt-1 text-xs leading-5 text-gray-500">
+                          {{ expense.id }}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="absolute bottom-0 right-full h-px w-screen bg-gray-100"
+                    ></div>
+                    <div
+                      class="absolute bottom-0 left-0 h-px w-screen bg-gray-100"
+                    ></div>
+                  </td>
+                  <td class="hidden py-5 pr-6 sm:table-cell">
+                    <div class="text-sm leading-6 text-gray-900">
+                      {{ expense.category }}
+                    </div>
+                    <div class="mt-1 text-xs leading-5 text-gray-500">
+                      {{ expense.store }}
+                    </div>
+                  </td>
+                  <td class="py-5">
+                    <div class="flex">
+                      {{
+                        expense.amount.value
+                          | currency : expense.amount.currency
+                      }}
+                    </div>
+                    <div class="mt-1 text-xs leading-5 text-gray-500">
+                      {{ expense.items.length }} items
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>
