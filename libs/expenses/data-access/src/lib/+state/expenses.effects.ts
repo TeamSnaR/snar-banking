@@ -38,23 +38,21 @@ export class ExpensesEffects {
   expenseDetails = createEffect(() =>
     this.actions$.pipe(
       ofType(ExpensesActions.getExpenseDetails),
-      concatLatestFrom(() =>
-        combineLatest([
-          this.store.select(selectRouteParam('id')),
-          this.store.select(selectExpensesEntities),
-        ])
-      ),
-      switchMap(([, [id, entities]]) => {
-        return id && entities[id] != null
+      concatLatestFrom(() => [
+        this.store.select(selectRouteParam('id')),
+        this.store.select(selectExpensesEntities),
+      ]),
+      switchMap(([, id, entities]) =>
+        id && entities[id] != null
           ? of(id).pipe(map((id) => ExpensesActions.setSelectedExpense({ id })))
-          : this.expensesService
-              .getExpenseDetails(id ?? '')
-              .pipe(
-                map((expenseDetails) =>
-                  ExpensesActions.loadExpenseDetailsSuccess({ expenseDetails })
-                )
-              );
-      }),
+          : this.expensesService.getExpenseDetails(id!).pipe(
+              map((expenseDetails) =>
+                ExpensesActions.loadExpenseDetailsSuccess({
+                  expenseDetails,
+                })
+              )
+            )
+      ),
       catchError((error) => {
         console.error('Error', error);
         return of(ExpensesActions.loadExpenseDetailsFailure({ error }));

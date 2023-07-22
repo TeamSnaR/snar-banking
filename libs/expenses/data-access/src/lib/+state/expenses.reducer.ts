@@ -44,7 +44,11 @@ const reducer = createReducer(
     selectedId: id,
   })),
   on(ExpensesActions.loadExpenseDetailsSuccess, (state, { expenseDetails }) =>
-    expensesAdapter.addOne(expenseDetails, { ...state, loaded: true })
+    expensesAdapter.addOne(expenseDetails, {
+      ...state,
+      selectedId: expenseDetails.id,
+      loaded: true,
+    })
   ),
   on(ExpensesActions.loadExpenseDetailsFailure, (state, { error }) => ({
     ...state,
