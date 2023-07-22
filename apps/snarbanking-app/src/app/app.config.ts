@@ -12,6 +12,8 @@ import {
 } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideRouterStore } from '@ngrx/router-store';
+import { appReducers } from '@snarbanking-workspace/shared/data-access';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +21,8 @@ export const appConfig: ApplicationConfig = {
       shellFeatureRoutes,
       ...[withEnabledBlockingInitialNavigation(), withComponentInputBinding()]
     ),
-    provideStore({}),
+    provideStore(appReducers),
+    provideRouterStore(),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

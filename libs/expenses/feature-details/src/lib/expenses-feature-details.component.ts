@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import * as fromActions from '@snarbanking-workspace/expenses/data-access';
 import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
+import * as fromActions from '@snarbanking-workspace/expenses/data-access';
 
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-details',
@@ -18,11 +18,8 @@ import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
   ],
 })
 export class ExpensesFeatureDetailsComponent {
-  @Input()
-  set id(expenseId: string) {
-    this.store.dispatch(fromActions.setSelectedExpense({ id: expenseId }));
+  expenseDetailsVm$ = this.store.select(fromSelectors.selectExpenseDetailsVm);
+  constructor(private store: Store) {
+    this.store.dispatch(fromActions.getExpenseDetails());
   }
-
-  expenseDetails$ = this.store.select(fromSelectors.selectEntity);
-  constructor(private store: Store) {}
 }

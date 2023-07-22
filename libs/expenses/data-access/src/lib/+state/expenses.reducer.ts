@@ -42,15 +42,14 @@ const reducer = createReducer(
   on(ExpensesActions.setSelectedExpense, (state, { id }) => ({
     ...state,
     selectedId: id,
+  })),
+  on(ExpensesActions.loadExpenseDetailsSuccess, (state, { expenseDetails }) =>
+    expensesAdapter.addOne(expenseDetails, { ...state, loaded: true })
+  ),
+  on(ExpensesActions.loadExpenseDetailsFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
-  // on(ExpensesActions.getExpenseDetails, (state) => ({
-  //   ...state,
-  //   loaded: false,
-  //   error: null,
-  // })),
-  // on(ExpensesActions.loadExpenseDetailsSuccess, (state, { expenseDetails }) =>
-  //   expensesAdapter.addOne(expenseDetails, { ...state, loaded: true })
-  // )
 );
 
 export function expensesReducer(

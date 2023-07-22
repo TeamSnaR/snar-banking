@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store';
+import { createAction, emptyProps, props } from '@ngrx/store';
 import { ExpensesEntity } from './expenses.models';
 
 export const initExpenses = createAction('[Expenses Page] Init');
@@ -19,9 +19,13 @@ export const setSelectedExpense = createAction(
 );
 export const getExpenseDetails = createAction(
   '[Expense Details Page] Get',
-  props<{ id: string }>()
+  emptyProps
 );
 export const loadExpenseDetailsSuccess = createAction(
   '[Expenses/API] Load Expense Details Success',
   props<{ expenseDetails: ExpensesEntity }>()
+);
+export const loadExpenseDetailsFailure = createAction(
+  '[Expenses/API] Load Expense Details Failure',
+  props<{ error: string }>()
 );
