@@ -9,10 +9,17 @@ import * as ExpensesSelectors from './expenses.selectors';
 describe('Expenses Selectors', () => {
   const ERROR_MSG = 'No Error Available';
   const getExpensesId = (it: ExpensesEntity) => it.id;
-  const createExpensesEntity = (id: string, name = '') =>
+  const createExpensesEntity = (id: string, description = '') =>
     ({
       id,
-      name: name || `name-${id}`,
+      description: description || `name-${id}`,
+      amount: {
+        currency: 'GBP',
+        value: 1.0,
+      },
+      category: 'Grocery',
+      store: 'Lidl',
+      items: [],
     } as ExpensesEntity);
 
   let state: ExpensesPartialState;

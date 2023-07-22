@@ -15,6 +15,13 @@ describe('Expenses Reducer', () => {
   ): ExpensesEntity => ({
     id,
     description: description || `name-${id}`,
+    amount: {
+      currency: 'GBP',
+      value: 1.0,
+    },
+    category: 'Grocery',
+    store: 'Lidl',
+    items: [],
   });
 
   describe('valid Expenses actions', () => {
