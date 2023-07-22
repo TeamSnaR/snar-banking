@@ -20,7 +20,5 @@ import { RouterModule } from '@angular/router';
 })
 export class ExpensesFeatureViewComponent {
   public vm$ = this.expensesStore.select(fromSelectors.selectExpensesVm);
-  constructor(public expensesStore: Store) {
-    this.expensesStore.dispatch(fromActions.initExpenses());
-  }
+  constructor(public expensesStore: Store) {}
 }
