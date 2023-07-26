@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
 import * as fromActions from '@snarbanking-workspace/expenses/data-access';
-
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-details',
   standalone: true,
