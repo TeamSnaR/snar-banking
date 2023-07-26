@@ -55,7 +55,11 @@
               },
               {
                 "sourceTag": "type:shell",
-                "onlyDependOnLibsWithTags": ["type:feature", "type:ui", "type:data-access"]
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:ui",
+                  "type:data-access"
+                ]
               }
             ]
           }
