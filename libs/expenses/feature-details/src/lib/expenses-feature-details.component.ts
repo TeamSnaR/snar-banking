@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
 import * as fromActions from '@snarbanking-workspace/expenses/data-access';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './expenses-feature-details.component.html',
   styles: [
     `
