@@ -13,8 +13,5 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": [
-    "src/**/*.ts",
-    "../../shared/data-access/src/lib/custom-route-serializer.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }

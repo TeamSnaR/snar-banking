@@ -32,6 +32,7 @@
                 "sourceTag": "type:app",
                 "onlyDependOnLibsWithTags": [
                   "type:shell",
+                  "type:data-access",
                   "type:util",
                   "type:ui"
                 ]
@@ -54,7 +55,11 @@
               },
               {
                 "sourceTag": "type:shell",
-                "onlyDependOnLibsWithTags": ["type:feature", "type:ui"]
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:ui",
+                  "type:data-access"
+                ]
               }
             ]
           }

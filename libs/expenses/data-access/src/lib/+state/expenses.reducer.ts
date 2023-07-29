@@ -38,6 +38,21 @@ const reducer = createReducer(
   on(ExpensesActions.loadExpensesFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(ExpensesActions.setSelectedExpense, (state, { id }) => ({
+    ...state,
+    selectedId: id,
+  })),
+  on(ExpensesActions.loadExpenseDetailsSuccess, (state, { expenseDetails }) =>
+    expensesAdapter.addOne(expenseDetails, {
+      ...state,
+      selectedId: expenseDetails.id,
+      loaded: true,
+    })
+  ),
+  on(ExpensesActions.loadExpenseDetailsFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 
