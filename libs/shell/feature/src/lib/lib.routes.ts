@@ -9,15 +9,8 @@ export const shellFeatureRoutes: Route[] = [
       {
         path: 'expenses',
         loadChildren: () =>
-          import('@snarbanking-workspace/expenses/feature-view').then(
-            (m) => m.expensesFeatureViewRoutes
-          ),
-      },
-      {
-        path: 'expenses/:id',
-        loadChildren: () =>
-          import('@snarbanking-workspace/expenses/feature-details').then(
-            (m) => m.expensesFeatureDetailsRoutes
+          import('@snarbanking-workspace/expenses/feature-shell').then(
+            (m) => m.expensesFeatureShellRoutes
           ),
       },
     ],
