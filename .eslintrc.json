@@ -34,11 +34,7 @@
               },
               {
                 "sourceTag": "type:feature",
-                "onlyDependOnLibsWithTags": [
-                  "type:util",
-                  "type:ui",
-                  "type:data-access"
-                ]
+                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
               },
               {
                 "sourceTag": "type:ui",
@@ -49,12 +45,8 @@
                 "onlyDependOnLibsWithTags": ["type:data-access", "type:util"]
               },
               {
-                "sourceTag": "type:shell",
-                "onlyDependOnLibsWithTags": [
-                  "type:feature",
-                  "type:ui",
-                  "type:data-access"
-                ]
+                "sourceTag": "type:util",
+                "onlyDependOnLibsWithTags": ["type:util"]
               }
             ]
           }
