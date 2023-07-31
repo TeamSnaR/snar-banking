@@ -14,15 +14,7 @@
             "depConstraints": [
               {
                 "sourceTag": "scope:snarbanking-app",
-                "onlyDependOnLibsWithTags": ["scope:shell"]
-              },
-              {
-                "sourceTag": "scope:shell",
-                "onlyDependOnLibsWithTags": [
-                  "scope:shell",
-                  "scope:shared",
-                  "scope:expenses"
-                ]
+                "onlyDependOnLibsWithTags": ["type:shell"]
               },
               {
                 "sourceTag": "scope:shared",
@@ -34,7 +26,11 @@
               },
               {
                 "sourceTag": "type:shell",
-                "onlyDependOnLibsWithTags": ["type:feature", "type:ui"]
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:ui",
+                  "type:data-access"
+                ]
               },
               {
                 "sourceTag": "type:feature",
@@ -51,6 +47,14 @@
               {
                 "sourceTag": "type:data-access",
                 "onlyDependOnLibsWithTags": ["type:data-access", "type:util"]
+              },
+              {
+                "sourceTag": "type:shell",
+                "onlyDependOnLibsWithTags": [
+                  "type:feature",
+                  "type:ui",
+                  "type:data-access"
+                ]
               }
             ]
           }

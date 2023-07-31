@@ -4,6 +4,7 @@ import {
   ExpensesState,
   expensesAdapter,
 } from './expenses.reducer';
+import { selectRouteParam } from '@snarbanking-workspace/shared/data-access';
 
 // Lookup the 'Expenses' feature state managed by NgRx
 export const selectExpensesState =
@@ -42,9 +43,22 @@ export const selectEntity = createSelector(
   (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
 );
 
+export const selectEntityFromRoute = createSelector(
+  selectExpensesEntities,
+  selectRouteParam('id'),
+  (entities, id) => (id ? entities[id] : undefined)
+);
+
 export const selectExpensesVm = createSelector(
   selectAllExpenses,
   selectExpensesLoaded,
   selectExpensesError,
   (expenses, loaded, error) => ({ expenses, loaded, error })
+);
+
+export const selectExpenseDetailsVm = createSelector(
+  selectEntity,
+  selectExpensesLoaded,
+  selectExpensesError,
+  (expenseDetails, loaded, error) => ({ expenseDetails, loaded, error })
 );

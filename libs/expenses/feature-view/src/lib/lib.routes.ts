@@ -8,6 +8,7 @@ export const expensesFeatureViewRoutes: Route[] = [
   {
     path: '',
     component: ExpensesFeatureViewComponent,
+    title: 'Expenses',
     providers: [
       provideState(
         fromExpenses.EXPENSES_FEATURE_KEY,

@@ -11,4 +11,8 @@ export class ExpensesService {
   getExpenses(): Observable<ExpensesEntity[]> {
     return this.httpClient.get<ExpensesEntity[]>('/api/expenses');
   }
+
+  getExpenseDetails(expenseId: string): Observable<ExpensesEntity> {
+    return this.httpClient.get<ExpensesEntity>(`/api/expenses/${expenseId}`);
+  }
 }

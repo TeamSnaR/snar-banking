@@ -17,5 +17,5 @@ import { CommonModule } from '@angular/common';
 })
 export class ShellUiHeaderComponent {
   @Input()
-  headerText!: string;
+  headerText?: string | null;
 }
