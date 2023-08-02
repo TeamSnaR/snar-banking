@@ -1,8 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
+export type ExpenseFormData = Omit<
+  ExpensesEntity,
+  'id' | 'amount' | 'items'
+> & {
+  currency: string;
+  value: number;
+};
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
   standalone: true,
@@ -17,7 +24,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class ManageExpenseFormComponent {
-  expenseFormData!: ExpensesEntity;
+  expenseFormData!: ExpenseFormData;
   // create a javascript map of currencies and their symbols to use in the template
   currencies = new Map([
     ['USD', '$'],
@@ -38,7 +45,35 @@ export class ManageExpenseFormComponent {
     'Lidl',
     'Aldi',
   ];
-  @Input() set expenseEntity(value: ExpensesEntity) {
-    this.expenseFormData = { ...value };
+  #_expenseEntity!: ExpensesEntity;
+  @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
+    this.#_expenseEntity = expenseEntity;
+    this.expenseFormData = {
+      description: expenseEntity.description,
+      value: expenseEntity.amount.value,
+      currency: expenseEntity.amount.currency,
+      category: expenseEntity.category,
+      store: expenseEntity.store,
+    };
+  }
+
+  @Output() expenseSubmitted = new EventEmitter<ExpensesEntity>();
+
+  submitExpenseForm(expenseForm: NgForm) {
+    if (expenseForm.valid) {
+      const expenseData: ExpensesEntity = {
+        ...this.#_expenseEntity,
+        description: expenseForm.value.description,
+        amount: {
+          ...this.#_expenseEntity.amount,
+          value: +expenseForm.value.amount,
+        },
+        category: expenseForm.value.category,
+        store: expenseForm.value.store,
+      };
+
+      // validate and cleanse the data
+      this.expenseSubmitted.emit(expenseData);
+    }
   }
 }
