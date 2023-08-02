@@ -1,1 +1,5 @@
-<p>expenses-feature-manage works!</p>
+<ng-container *ngIf="expenseFormData$ | async as expenseFormData">
+  <snarbanking-workspace-manage-expense-form
+    [expenseEntity]="expenseFormData.expenseDetails!"
+  ></snarbanking-workspace-manage-expense-form>
+</ng-container>
