@@ -37,7 +37,7 @@
             class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
           >
             <span class="text-gray-500 sm:text-sm">{{
-              currencies.get(expenseFormData.currency)
+              expensePresenterService.currencies.get(expenseFormData.currency)
             }}</span>
           </div>
           <input
@@ -70,7 +70,10 @@
           name="category"
           class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
-          <option *ngFor="let category of categories" [value]="category">
+          <option
+            *ngFor="let category of expensePresenterService.categories"
+            [value]="category"
+          >
             {{ category }}
           </option>
         </select>
@@ -87,7 +90,10 @@
           name="store"
           class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
-          <option *ngFor="let store of groceryStores" [value]="store">
+          <option
+            *ngFor="let store of expensePresenterService.groceryStores"
+            [value]="store"
+          >
             {{ store }}
           </option>
         </select>
