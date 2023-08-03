@@ -34,14 +34,13 @@ export class ManageExpenseFormComponent {
     };
   }
 
-  @Output() expenseSubmitted = new EventEmitter<ExpensesEntity>();
-
   submitExpenseForm(expenseForm: NgForm) {
     if (expenseForm.invalid) return;
     const expenseData = this.expensePresenterService.addExpense(
       expenseForm,
       this.#_expenseEntity
     );
-    this.expenseSubmitted.emit(expenseData);
+
+    // TODO: submit expenseData
   }
 }

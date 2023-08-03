@@ -11,6 +11,7 @@ export class ExpensePresenterService {
     expenseForm: NgForm,
     expensesEntity: ExpensesEntity
   ): ExpensesEntity {
+    // TODO: validate expense form data
     const expenseData: ExpensesEntity = {
       ...expensesEntity,
       description: expenseForm.value.description,
