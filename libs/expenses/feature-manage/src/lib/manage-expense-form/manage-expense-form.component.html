@@ -3,6 +3,7 @@
   #expenseForm="ngForm"
   class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
   (ngSubmit)="submitExpenseForm(expenseForm)"
+  [ngFormOptions]="{ updateOn: 'blur' }"
 >
   <pre>{{ expenseFormData | json }}</pre>
   <div class="px-4 py-6 sm:p-8">
