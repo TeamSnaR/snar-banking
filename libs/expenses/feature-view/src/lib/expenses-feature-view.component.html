@@ -97,11 +97,18 @@
                     </div>
                   </td>
                   <td class="py-5 text-right">
-                    <div class="flex justify-end">
+                    <div class="flex gap-3 justify-end">
                       <a
                         [routerLink]="[expense.id]"
                         class="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
                         >View<span class="hidden sm:inline">
+                          transaction</span
+                        ></a
+                      >
+                      <a
+                        [routerLink]="[expense.id, 'manage']"
+                        class="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+                        >Manage<span class="hidden sm:inline">
                           transaction</span
                         ></a
                       >

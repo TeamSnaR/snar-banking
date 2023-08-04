@@ -56,6 +56,74 @@
         </div>
       </div>
       <div class="sm:col-span-4">
+        <!-- create a div container that holds three inner divs styled with tailwind classes -->
+        <fieldset>
+          <legend class="sr-only">Purchase date</legend>
+          <div class="flex items-start justify-start gap-3">
+            <div class="w-full">
+              <label
+                for="year"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Year</label
+              >
+              <select
+                [(ngModel)]="expenseFormData.year"
+                id="year"
+                name="year"
+                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <option
+                  *ngFor="let year of expensePresenterService.years"
+                  [value]="year"
+                >
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+            <div class="w-full">
+              <label
+                for="month"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Month</label
+              >
+              <select
+                [(ngModel)]="expenseFormData.month"
+                id="month"
+                name="month"
+                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <option
+                  *ngFor="let month of expensePresenterService.months"
+                  [value]="month.value"
+                >
+                  {{ month.name }}
+                </option>
+              </select>
+            </div>
+            <div class="w-full">
+              <label
+                for="day"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Day</label
+              >
+              <select
+                [(ngModel)]="expenseFormData.day"
+                id="day"
+                name="day"
+                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <option
+                  *ngFor="let day of expensePresenterService.days$ | async"
+                  [value]="day"
+                >
+                  {{ day }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="sm:col-span-4">
         <label
           for="category"
           class="block text-sm font-medium leading-6 text-gray-900"

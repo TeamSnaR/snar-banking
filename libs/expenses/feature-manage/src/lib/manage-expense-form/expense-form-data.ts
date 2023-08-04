@@ -6,4 +6,8 @@ export type ExpenseFormData = Omit<
 > & {
   currency: string;
   value: number;
+} & {
+  year: number;
+  month: number;
+  day: number;
 };

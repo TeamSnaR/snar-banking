@@ -25,13 +25,8 @@ export class ManageExpenseFormComponent {
   #_expenseEntity!: ExpensesEntity;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
     this.#_expenseEntity = expenseEntity;
-    this.expenseFormData = {
-      description: expenseEntity.description,
-      value: expenseEntity.amount.value,
-      currency: expenseEntity.amount.currency,
-      category: expenseEntity.category,
-      store: expenseEntity.store,
-    };
+    this.expenseFormData =
+      this.expensePresenterService.initialize(expenseEntity);
   }
 
   submitExpenseForm(expenseForm: NgForm) {
@@ -41,6 +36,7 @@ export class ManageExpenseFormComponent {
       this.#_expenseEntity
     );
 
+    console.log(expenseData);
     // TODO: submit expenseData
   }
 }
