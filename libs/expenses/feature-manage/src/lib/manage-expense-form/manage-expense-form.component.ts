@@ -39,4 +39,13 @@ export class ManageExpenseFormComponent {
     console.log(expenseData);
     // TODO: submit expenseData
   }
+
+  monthSelected($event: Event) {
+    const month = ($event.target as HTMLInputElement).value;
+    this.expensePresenterService.selectMonth(+month);
+  }
+  yearSelected($event: Event) {
+    const year = ($event.target as HTMLInputElement).value;
+    this.expensePresenterService.selectYear(+year);
+  }
 }

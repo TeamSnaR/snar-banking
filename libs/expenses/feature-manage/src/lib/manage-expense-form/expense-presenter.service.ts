@@ -1,22 +1,37 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { NgForm } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, map, merge, startWith, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpensePresenterService {
+  // TODO: add component store
+  selectYear(year: number) {
+    this.yearSubject.next(year);
+  }
+  selectMonth(month: number) {
+    this.monthSubject.next(month);
+  }
   daysSubject = new BehaviorSubject<number[]>([]);
-  days$ = this.daysSubject.asObservable();
+  yearSubject = new BehaviorSubject<number>(new Date().getFullYear());
+  monthSubject = new BehaviorSubject<number>(new Date().getMonth() + 1);
+
+  // create a stream of days based on the year and month using rxjs
+  days$ = merge(
+    this.yearSubject.pipe(
+      map((year) => ({ year, month: this.monthSubject.getValue() }))
+    ),
+    this.monthSubject.pipe(
+      map((month) => ({ month, year: this.yearSubject.getValue() }))
+    )
+  ).pipe(map(({ year, month }) => this.getDays(year, month)));
 
   initialize(expenseEntity: ExpensesEntity): ExpenseFormData {
     const purchaseDate = new Date(expenseEntity.purchaseDate);
-    this.daysSubject.next(
-      this.getDays(purchaseDate.getFullYear(), purchaseDate.getMonth() + 1)
-    );
-    return {
+    const expenseFormData = {
       description: expenseEntity.description,
       value: expenseEntity.amount.value,
       currency: expenseEntity.amount.currency,
@@ -27,6 +42,9 @@ export class ExpensePresenterService {
       month: purchaseDate.getMonth() + 1,
       day: purchaseDate.getDate(),
     };
+    this.yearSubject.next(expenseFormData.year);
+    this.monthSubject.next(expenseFormData.month);
+    return expenseFormData;
   }
   addExpense(
     expenseForm: NgForm,
