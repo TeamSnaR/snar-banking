@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
