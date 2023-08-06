@@ -15,7 +15,7 @@ export const expensesFeatureShellRoutes: Route[] = [
           ),
       },
       {
-        path: ':id',
+        path: ':id/details',
         loadChildren: () =>
           import('@snarbanking-workspace/expenses/feature-details').then(
             (m) => m.expensesFeatureDetailsRoutes
@@ -26,6 +26,13 @@ export const expensesFeatureShellRoutes: Route[] = [
         loadChildren: () =>
           import('@snarbanking-workspace/expenses/feature-manage').then(
             (m) => m.expensesFeatureManageRoutes
+          ),
+      },
+      {
+        path: 'create',
+        loadChildren: () =>
+          import('@snarbanking-workspace/expenses/feature-create').then(
+            (m) => m.expensesFeatureCreateRoutes
           ),
       },
     ],

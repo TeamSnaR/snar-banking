@@ -18,6 +18,9 @@
       "@snarbanking-workspace/expenses/data-access": [
         "libs/expenses/data-access/src/index.ts"
       ],
+      "@snarbanking-workspace/expenses/feature-create": [
+        "libs/expenses/feature-create/src/index.ts"
+      ],
       "@snarbanking-workspace/expenses/feature-details": [
         "libs/expenses/feature-details/src/index.ts"
       ],
