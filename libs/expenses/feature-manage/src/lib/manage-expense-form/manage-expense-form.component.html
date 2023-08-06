@@ -35,7 +35,7 @@
             class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
           >
             <span class="text-gray-500 sm:text-sm">{{
-              expensePresenterService.currencies.get(expenseFormData.currency)
+              expenseFormStore.currency$ | async
             }}</span>
           </div>
           <input
@@ -75,7 +75,7 @@
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option
-                  *ngFor="let year of expensePresenterService.years"
+                  *ngFor="let year of expenseFormStore.years$ | async"
                   [value]="year"
                 >
                   {{ year }}
@@ -96,7 +96,7 @@
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option
-                  *ngFor="let month of expensePresenterService.months"
+                  *ngFor="let month of expenseFormStore.months$ | async"
                   [value]="month.value"
                 >
                   {{ month.name }}
@@ -116,7 +116,7 @@
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option
-                  *ngFor="let day of expensePresenterService.days$ | async"
+                  *ngFor="let day of expenseFormStore.days$ | async"
                   [value]="day"
                 >
                   {{ day }}
@@ -139,7 +139,7 @@
           class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
           <option
-            *ngFor="let category of expensePresenterService.categories"
+            *ngFor="let category of expenseFormStore.categories$ | async"
             [value]="category"
           >
             {{ category }}
@@ -159,7 +159,7 @@
           class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
           <option
-            *ngFor="let store of expensePresenterService.groceryStores"
+            *ngFor="let store of expenseFormStore.groceryStores$ | async"
             [value]="store"
           >
             {{ store }}

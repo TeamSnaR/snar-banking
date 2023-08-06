@@ -4,6 +4,7 @@ import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExpensePresenterService } from './expense-presenter.service';
 import { ExpenseFormData } from './expense-form-data';
+import { ExpenseFormStore } from './expense-form.store';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -17,16 +18,18 @@ import { ExpenseFormData } from './expense-form-data';
       }
     `,
   ],
-  providers: [ExpensePresenterService],
+  providers: [ExpensePresenterService, ExpenseFormStore],
 })
 export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
+  expenseFormStore = inject(ExpenseFormStore);
   expenseFormData!: ExpenseFormData;
   #_expenseEntity!: ExpensesEntity;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
     this.#_expenseEntity = expenseEntity;
     this.expenseFormData =
       this.expensePresenterService.initialize(expenseEntity);
+    this.expenseFormStore.initialize(this.expenseFormData);
   }
 
   submitExpenseForm(expenseForm: NgForm) {
@@ -42,10 +45,10 @@ export class ManageExpenseFormComponent {
 
   monthSelected($event: Event) {
     const month = ($event.target as HTMLInputElement).value;
-    this.expensePresenterService.selectMonth(+month);
+    this.expenseFormStore.selectMonth(+month);
   }
   yearSelected($event: Event) {
     const year = ($event.target as HTMLInputElement).value;
-    this.expensePresenterService.selectYear(+year);
+    this.expenseFormStore.selectYear(+year);
   }
 }
