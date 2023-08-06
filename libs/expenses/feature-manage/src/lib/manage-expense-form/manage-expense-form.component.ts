@@ -5,6 +5,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExpensePresenterService } from './expense-presenter.service';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
+import { Store } from '@ngrx/store';
+import * as fromExpenseActions from '@snarbanking-workspace/expenses/data-access';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -23,6 +25,7 @@ import { ExpenseFormStore } from './expense-form.store';
 export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
+  store = inject(Store);
   expenseFormData!: ExpenseFormData;
   #_expenseEntity!: ExpensesEntity;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
@@ -39,8 +42,7 @@ export class ManageExpenseFormComponent {
       this.#_expenseEntity
     );
 
-    console.log(expenseData);
-    // TODO: submit expenseData
+    this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
   }
 
   monthSelected($event: Event) {
