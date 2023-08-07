@@ -27,9 +27,7 @@ export class ManageExpenseFormComponent {
   expenseFormStore = inject(ExpenseFormStore);
   store = inject(Store);
   expenseFormData!: ExpenseFormData;
-  #_expenseEntity!: ExpensesEntity;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
-    this.#_expenseEntity = expenseEntity;
     this.expenseFormData =
       this.expensePresenterService.initialize(expenseEntity);
     this.expenseFormStore.initialize(this.expenseFormData);
@@ -37,11 +35,9 @@ export class ManageExpenseFormComponent {
 
   submitExpenseForm(expenseForm: NgForm) {
     if (expenseForm.invalid) return;
-    const expenseData = this.expensePresenterService.addExpense(
-      expenseForm,
-      this.#_expenseEntity
-    );
+    const expenseData = this.expensePresenterService.addExpense(expenseForm);
 
+    console.log(expenseData);
     this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
   }
 

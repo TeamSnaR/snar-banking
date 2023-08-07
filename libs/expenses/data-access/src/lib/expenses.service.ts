@@ -17,10 +17,6 @@ export class ExpensesService {
   }
 
   addExpense(expenseData: ExpensesEntity): Observable<string> {
-    return this.httpClient
-      .post('/api/expenses', expenseData, {
-        observe: 'response',
-      })
-      .pipe(map((response) => response.headers.get('location')!));
+    return this.httpClient.post<string>('/api/expenses', expenseData);
   }
 }

@@ -18,14 +18,22 @@ import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-f
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpensesFeatureCreateComponent {
-  // create and initialize a new object of type ExpensesEntity here
-  expenseEntity: ExpensesEntity = {
-    id: 0,
-    amount: { value: 0, currency: 'GBP' },
-    purchaseDate: new Date().toUTCString(),
-    store: '',
-    category: '',
-    description: '',
-    items: [],
+  readonly #createDefaultExpenseData: () => ExpensesEntity = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    const defaultCurrency = 'GBP';
+    const defaultStore = 'Lidl';
+    return {
+      id: Math.random().toString(36).substring(7),
+      description: '',
+      amount: {
+        currency: defaultCurrency,
+        value: 0,
+      },
+      category: 'Grocery',
+      store: defaultStore,
+      purchaseDate: today,
+      items: [],
+    };
   };
+  expenseEntity = this.#createDefaultExpenseData();
 }

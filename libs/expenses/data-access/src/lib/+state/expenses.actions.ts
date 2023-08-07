@@ -33,3 +33,13 @@ export const addExpense = createAction(
   '[Manage Expense Form] Add Expense',
   props<{ expenseData: ExpensesEntity }>()
 );
+
+export const addExpenseSuccess = createAction(
+  '[Expenses/API] Add Expense Success',
+  props<{ expense: ExpensesEntity }>()
+);
+
+export const addExpenseFailure = createAction(
+  '[Expenses/API] Add Expense Failure',
+  props<{ error: string }>()
+);

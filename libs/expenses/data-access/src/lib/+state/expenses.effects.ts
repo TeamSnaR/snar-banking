@@ -70,20 +70,27 @@ export class ExpensesEffects {
     )
   );
 
-  addExpense = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ExpensesActions.addExpense),
-        concatMap(({ expenseData }) =>
-          this.expensesService
-            .addExpense(expenseData)
-            .pipe(tap((location) => this.router.navigateByUrl(location)))
-        ),
-        catchError((error) => {
-          console.error('Error', error);
-          return of(ExpensesActions.loadExpensesFailure({ error }));
-        })
+  addExpense = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ExpensesActions.addExpense),
+      concatMap(({ expenseData }) =>
+        this.expensesService.addExpense(expenseData).pipe(
+          switchMap((id) =>
+            this.expensesService.getExpenseDetails(id).pipe(
+              map((newExpense) =>
+                ExpensesActions.addExpenseSuccess({ expense: newExpense })
+              ),
+              catchError((error) =>
+                of(ExpensesActions.addExpenseFailure({ error }))
+              )
+            )
+          )
+        )
       ),
-    { dispatch: false }
+      catchError((error) => {
+        console.error('Error', error);
+        return of(ExpensesActions.loadExpensesFailure({ error }));
+      })
+    )
   );
 }
