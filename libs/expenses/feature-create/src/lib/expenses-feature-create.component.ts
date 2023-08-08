@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-forms';
+import { Store } from '@ngrx/store';
+import * as fromExpenseActions from '@snarbanking-workspace/expenses/data-access';
 
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-create',
@@ -18,6 +20,8 @@ import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-f
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpensesFeatureCreateComponent {
+  store = inject(Store);
+
   readonly #createDefaultExpenseData: () => ExpensesEntity = () => {
     const today = new Date().toISOString().slice(0, 10);
     const defaultCurrency = 'GBP';
@@ -36,4 +40,9 @@ export class ExpensesFeatureCreateComponent {
     };
   };
   expenseEntity = this.#createDefaultExpenseData();
+  onExpenseFormSubmit(expenseEntity: ExpensesEntity) {
+    this.store.dispatch(
+      fromExpenseActions.addExpense({ expenseData: expenseEntity })
+    );
+  }
 }

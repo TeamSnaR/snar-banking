@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -25,7 +25,6 @@ import * as fromExpenseActions from '@snarbanking-workspace/expenses/data-access
 export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
-  store = inject(Store);
   expenseFormData!: ExpenseFormData;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
     this.expenseFormData =
@@ -33,11 +32,12 @@ export class ManageExpenseFormComponent {
     this.expenseFormStore.initialize(this.expenseFormData);
   }
 
+  @Output() expenseFormSubmit = new EventEmitter<ExpensesEntity>();
+
   submitExpenseForm(expenseForm: NgForm) {
     if (expenseForm.invalid) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
-
-    this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
+    this.expenseFormSubmit.emit(expenseData);
   }
 
   monthSelected($event: Event) {
