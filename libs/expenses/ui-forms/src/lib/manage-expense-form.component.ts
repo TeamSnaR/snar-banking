@@ -37,7 +37,6 @@ export class ManageExpenseFormComponent {
     if (expenseForm.invalid) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
 
-    console.log(expenseData);
     this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
   }
 
