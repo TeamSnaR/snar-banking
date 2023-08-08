@@ -33,11 +33,16 @@ export class ManageExpenseFormComponent {
   }
 
   @Output() expenseFormSubmit = new EventEmitter<ExpensesEntity>();
+  @Output() expenseFormCancel = new EventEmitter<void>();
 
   submitExpenseForm(expenseForm: NgForm) {
     if (expenseForm.invalid) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
     this.expenseFormSubmit.emit(expenseData);
+  }
+
+  cancelExpenseForm() {
+    this.expenseFormCancel.emit();
   }
 
   monthSelected($event: Event) {
