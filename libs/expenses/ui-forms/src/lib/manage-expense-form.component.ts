@@ -26,7 +26,7 @@ export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
   expenseFormData!: ExpenseFormData;
-  @Input() set expenseEntity(expenseEntity: ExpensesEntity) {
+  @Input() set expenseEntity(expenseEntity: ExpensesEntity | undefined) {
     this.expenseFormData =
       this.expensePresenterService.initialize(expenseEntity);
     this.expenseFormStore.initialize(this.expenseFormData);

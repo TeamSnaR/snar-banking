@@ -25,24 +25,7 @@ export class ExpensesFeatureCreateComponent {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
-  readonly #createDefaultExpenseData: () => ExpensesEntity = () => {
-    const today = new Date().toISOString().slice(0, 10);
-    const defaultCurrency = 'GBP';
-    const defaultStore = 'Lidl';
-    return {
-      id: Math.random().toString(36).substring(7),
-      description: '',
-      amount: {
-        currency: defaultCurrency,
-        value: 0,
-      },
-      category: 'Grocery',
-      store: defaultStore,
-      purchaseDate: today,
-      items: [],
-    };
-  };
-  expenseEntity = this.#createDefaultExpenseData();
+  expenseEntity?: ExpensesEntity;
   onExpenseFormSubmit(expenseEntity: ExpensesEntity) {
     this.store.dispatch(
       fromExpenseActions.addExpense({ expenseData: expenseEntity })
