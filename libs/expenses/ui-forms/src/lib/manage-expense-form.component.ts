@@ -5,8 +5,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExpensePresenterService } from './expense-presenter.service';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
-import { Store } from '@ngrx/store';
-import * as fromExpenseActions from '@snarbanking-workspace/expenses/data-access';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -36,8 +34,9 @@ export class ManageExpenseFormComponent {
   @Output() expenseFormCancel = new EventEmitter<void>();
 
   submitExpenseForm(expenseForm: NgForm) {
-    if (expenseForm.invalid) return;
+    if (!this.expensePresenterService.validate(expenseForm)) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
+    this.expensePresenterService.resetExpenseForm(expenseForm);
     this.expenseFormSubmit.emit(expenseData);
   }
 

@@ -1,5 +1,9 @@
 @tailwind base;
 @tailwind components;
+textarea.ng-invalid.ng-touched,
+input[type='number'].ng-invalid.ng-touched {
+  @apply border-b-2 border-b-red-500;
+}
 @tailwind utilities;
 
 /* You can add global styles to this file, and also import other style files */

@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ExpenseFormData } from './expense-form-data';
-import {
-  ExpenseItemEntity,
-  ExpensesEntity,
-} from '@snarbanking-workspace/expenses/data-access';
+import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { NgForm } from '@angular/forms';
 
 @Injectable({
   providedIn: 'any',
 })
 export class ExpensePresenterService {
+  resetExpenseForm(expenseForm: NgForm) {
+    expenseForm.resetForm();
+  }
+  validate(expenseForm: NgForm) {
+    expenseForm.form.markAllAsTouched();
+    return expenseForm.valid;
+  }
   #expensesEntity!: ExpensesEntity;
   initialize(expenseEntity?: ExpensesEntity): ExpenseFormData {
     this.#expensesEntity = expenseEntity ?? this.#createDefaultExpenseData();
@@ -19,7 +23,11 @@ export class ExpensePresenterService {
   addExpense(expenseForm: NgForm): ExpensesEntity {
     const expenseData: ExpensesEntity = {
       ...this.#expensesEntity,
-      description: expenseForm.value.description,
+      description:
+        expenseForm.value.description ||
+        `${this.#expensesEntity.store} ${this.#expensesEntity.category} ${
+          this.#expensesEntity.purchaseDate
+        }`,
       amount: {
         ...this.#expensesEntity.amount,
         value: +expenseForm.value.amount,
@@ -32,6 +40,7 @@ export class ExpensePresenterService {
         expenseForm.value.day
       ).toISOString(),
     };
+    expenseForm.resetForm();
     return expenseData;
   }
 
@@ -39,15 +48,16 @@ export class ExpensePresenterService {
     const today = new Date().toISOString().slice(0, 10);
     const defaultCurrency = 'GBP';
     const defaultStore = 'Lidl';
+    const defaultCategory = 'Grocery';
     return {
       id: Math.random().toString(36).substring(7),
-      description: '',
+      description: `${defaultStore} ${defaultCategory} ${today}`,
       amount: {
         currency: defaultCurrency,
-        value: 0,
+        value: 0.0,
       },
-      category: 'Grocery',
       store: defaultStore,
+      category: defaultCategory,
       purchaseDate: today,
       items: [],
     };
