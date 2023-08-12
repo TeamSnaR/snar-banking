@@ -1,11 +1,15 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
 import {
+  TitleStrategy,
   provideRouter,
   withComponentInputBinding,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
 import { provideStore } from '@ngrx/store';
-import { shellFeatureRoutes } from '@snarbanking-workspace/shell/feature';
+import {
+  SnarbankingDefaultPageTitleStrategy,
+  shellFeatureRoutes,
+} from '@snarbanking-workspace/shell/feature';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -32,5 +36,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects(),
     provideHttpClient(withInterceptorsFromDi()),
+    { provide: TitleStrategy, useClass: SnarbankingDefaultPageTitleStrategy },
   ],
 };
