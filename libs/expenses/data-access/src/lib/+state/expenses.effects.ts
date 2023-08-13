@@ -67,7 +67,7 @@ export class ExpensesEffects {
       ofType(ExpensesActions.addExpense),
       concatMap(({ expenseData }) =>
         this.expensesService.addExpense(expenseData).pipe(
-          switchMap((id) =>
+          concatMap((id) =>
             this.expensesService.getExpenseDetails(id).pipe(
               map((newExpense) =>
                 ExpensesActions.addExpenseSuccess({ expense: newExpense })
@@ -84,5 +84,20 @@ export class ExpensesEffects {
         return of(ExpensesActions.loadExpensesFailure({ error }));
       })
     )
+  );
+
+  showExpenseAddedNotification = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ExpensesActions.addExpenseSuccess),
+        map(({ expense }) =>
+          // this.notificationService.showNotification(
+          //   'Expense added successfully!',
+          //   expense
+          // )
+          console.log('Expense added successfully!', expense)
+        )
+      ),
+    { dispatch: false }
   );
 }
