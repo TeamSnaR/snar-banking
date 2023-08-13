@@ -1,8 +1,21 @@
+import { Type } from '@angular/core';
 import { Route } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { ExpensesEffects } from '@snarbanking-workspace/expenses/data-access';
 import * as fromExpenses from '@snarbanking-workspace/expenses/data-access';
+import { SharedUiToastrComponent } from '@snarbanking-workspace/shared/ui/toastr';
+import {
+  TOASTR_REGISTRY,
+  UtilToastrType,
+} from '@snarbanking-workspace/shared/utils/toastr';
+
+export const getToastrConfig = (): Record<UtilToastrType, Type<unknown>> => ({
+  success: SharedUiToastrComponent,
+  error: SharedUiToastrComponent,
+  warning: SharedUiToastrComponent,
+  info: SharedUiToastrComponent,
+});
 export const expensesFeatureShellRoutes: Route[] = [
   {
     path: '',
@@ -42,6 +55,10 @@ export const expensesFeatureShellRoutes: Route[] = [
         fromExpenses.expensesReducer
       ),
       provideEffects(ExpensesEffects),
+      {
+        provide: TOASTR_REGISTRY,
+        useFactory: getToastrConfig,
+      },
     ],
   },
 ];

@@ -30,6 +30,7 @@
                   "type:shell",
                   "type:feature",
                   "type:ui",
+                  "type:util",
                   "type:data-access"
                 ]
               },

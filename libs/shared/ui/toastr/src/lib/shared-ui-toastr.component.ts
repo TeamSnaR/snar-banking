@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UI_TOASTR_CONFIG } from './ui-toastr.service';
+import { UTIL_TOASTR_CONFIG } from '@snarbanking-workspace/shared/utils/toastr';
 
 @Component({
   selector: 'snarbanking-workspace-shared-ui-toastr',
@@ -17,5 +17,5 @@ import { UI_TOASTR_CONFIG } from './ui-toastr.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SharedUiToastrComponent {
-  public uiToastrConfig = inject(UI_TOASTR_CONFIG);
+  public uiToastrConfig = inject(UTIL_TOASTR_CONFIG);
 }
