@@ -90,13 +90,13 @@ export class ExpensesEffects {
     () =>
       this.actions$.pipe(
         ofType(ExpensesActions.addExpenseSuccess),
-        map(({ expense }) =>
-          // this.notificationService.showNotification(
-          //   'Expense added successfully!',
-          //   expense
-          // )
-          console.log('Expense added successfully!', expense)
-        )
+        map(({ expense }) => {
+          // const successToast = UiToastrService.successToast({
+          //   message: `Expense added successfully!`,
+          //   title: 'Expense added',
+          // });
+          // this.#uiToastrService.show(successToast);
+        })
       ),
     { dispatch: false }
   );
