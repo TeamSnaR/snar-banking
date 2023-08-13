@@ -7,17 +7,15 @@ import {
 } from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import {
-  SnarbankingDefaultPageTitleStrategy,
-  shellFeatureRoutes,
-} from '@snarbanking-workspace/shell/feature';
-import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
+import { shellFeatureRoutes } from './lib.routes';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
 import { appReducers } from '@snarbanking-workspace/shared/data-access';
+import { SnarbankingDefaultPageTitleStrategy } from './snarbanking-default-page-title.strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
