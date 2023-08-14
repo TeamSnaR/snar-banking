@@ -14,7 +14,7 @@
         From: "opacity-100"
         To: "opacity-0"
     -->
-    <div
+    <!-- <div
       class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5"
     >
       <div class="p-4">
@@ -63,6 +63,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <ng-template [cdkPortalOutlet]="helloPortal"></ng-template>
   </div>
 </div>
+
+<ng-template #helloPortal cdkPortal>
+  <p>hello world</p>
+</ng-template>

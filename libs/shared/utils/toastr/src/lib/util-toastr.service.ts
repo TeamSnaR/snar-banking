@@ -72,7 +72,6 @@ export class UtilToastrService {
         },
       ],
     });
-    console.log(this.#toastrRegistry);
     const toastrComponentPortal = new ComponentPortal(
       this.#toastrRegistry[data.type as unknown as UtilToastrType],
       null,
