@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { ShellUiNavStore } from './shell-ui-nav.store';
 @Component({
   selector: 'snarbanking-workspace-shell-ui-nav',
   standalone: true,
@@ -15,6 +16,12 @@ import { CdkMenuModule } from '@angular/cdk/menu';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [],
+  providers: [ShellUiNavStore],
 })
-export class ShellUiNavComponent {}
+export class ShellUiNavComponent {
+  #shellUiNavStore = inject(ShellUiNavStore);
+
+  navItems$ = this.#shellUiNavStore.navItems$;
+
+  trackByFn = (index: number, item: any) => item.id;
+}
