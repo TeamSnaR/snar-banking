@@ -144,7 +144,7 @@
           class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
           aria-controls="mobile-menu"
           aria-expanded="false"
-          cdkMenuTriggerFor="mobileMenu"
+          [cdkMenuTriggerFor]="mobileMenu"
         >
           <span class="sr-only">Open main menu</span>
           <!-- Menu open: "hidden", Menu closed: "block" -->
@@ -184,7 +184,11 @@
 
   <!-- Mobile menu, show/hide based on menu state. -->
   <ng-template #mobileMenu>
-    <div class="md:hidden" id="mobile-menu">
+    <div
+      class="md:hidden"
+      id="mobile-menu"
+      class="bg-gray-800 absolute w-full top-16"
+    >
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3" cdkMenu>
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <a
@@ -274,5 +278,3 @@
     </div>
   </ng-template>
 </nav>
-
-<!-- <div class="cdk-overlay-container"><div class="cdk-overlay-connected-position-bounding-box" dir="ltr" style="top: 0px; left: 0px; height: 100%; width: 100%;"><div id="cdk-overlay-0" class="cdk-overlay-pane" style="top: 48px; right: 0px;"><div _ngcontent-ng-c1680601193="" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="0" cdkmenu="" class="cdk-menu cdk-menu-group mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" id="cdk-menu-1" data-cdk-menu-stack-id="0"><a _ngcontent-ng-c1680601193="" role="menuitem" tabindex="-1" id="user-menu-item-0" class="block px-4 py-2 text-sm text-gray-700" ng-reflect-router-link="/expenses" href="/expenses">Your Profile</a><a _ngcontent-ng-c1680601193="" href="#" role="menuitem" tabindex="-1" id="user-menu-item-1" class="block px-4 py-2 text-sm text-gray-700">Settings</a><a _ngcontent-ng-c1680601193="" href="#" role="menuitem" tabindex="-1" id="user-menu-item-2" class="block px-4 py-2 text-sm text-gray-700">Sign out</a></div></div></div></div> -->
