@@ -1,15 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
-import { ShellUiNavStore } from './shell-ui-nav.store';
-
+import { CdkMenuModule } from '@angular/cdk/menu';
 @Component({
   selector: 'snarbanking-workspace-shell-ui-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule, OverlayModule],
+  imports: [CommonModule, RouterModule, CdkMenuModule],
   templateUrl: './shell-ui-nav.component.html',
   styles: [
     `
@@ -19,13 +15,6 @@ import { ShellUiNavStore } from './shell-ui-nav.store';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ShellUiNavStore],
+  providers: [],
 })
-export class ShellUiNavComponent {
-  #store = inject(ShellUiNavStore);
-  showUserMenu$ = this.#store.showUserMenu$;
-
-  toggleUserMenu() {
-    this.#store.toggleUserMenu();
-  }
-}
+export class ShellUiNavComponent {}

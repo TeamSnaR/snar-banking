@@ -73,10 +73,11 @@
                 id="user-menu-button"
                 aria-expanded="false"
                 aria-haspopup="true"
-                cdkOverlayOrigin
-                #trigger="cdkOverlayOrigin"
-                (click)="toggleUserMenu()"
+                [cdkMenuTriggerFor]="userMenu"
               >
+                <!-- cdkOverlayOrigin
+                #trigger="cdkOverlayOrigin"
+                (click)="toggleUserMenu()" -->
                 <span class="sr-only">Open user menu</span>
                 <img
                   class="h-8 w-8 rounded-full"
@@ -96,28 +97,23 @@
                   From: "transform opacity-100 scale-100"
                   To: "transform opacity-0 scale-95"
               -->
-            <ng-template
-              cdkConnectedOverlay
-              [cdkConnectedOverlayOrigin]="trigger"
-              [cdkConnectedOverlayOpen]="(showUserMenu$ | async)!"
-              [cdkConnectedOverlayPanelClass]="'absolute'"
-              (overlayOutsideClick)="toggleUserMenu()"
-            >
+            <ng-template #userMenu>
               <div
-                class="right-0 z-10 origin-top-right mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="user-menu-button"
                 tabindex="-1"
+                cdkMenu
               >
                 <!-- Active: "bg-gray-100", Not Active: "" -->
                 <a
-                  [routerLink]="['/expenses']"
+                  href="#"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
                   id="user-menu-item-0"
-                  >Your Profile hello</a
+                  >Your Profile</a
                 >
                 <a
                   href="#"
@@ -185,7 +181,7 @@
   </div>
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="md:hidden" id="mobile-menu">
+  <div class="md:hidden" id="mobile-menu" cdkMenu>
     <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <a
@@ -269,3 +265,5 @@
     </div>
   </div>
 </nav>
+
+<!-- <div class="cdk-overlay-container"><div class="cdk-overlay-connected-position-bounding-box" dir="ltr" style="top: 0px; left: 0px; height: 100%; width: 100%;"><div id="cdk-overlay-0" class="cdk-overlay-pane" style="top: 48px; right: 0px;"><div _ngcontent-ng-c1680601193="" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="0" cdkmenu="" class="cdk-menu cdk-menu-group mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" id="cdk-menu-1" data-cdk-menu-stack-id="0"><a _ngcontent-ng-c1680601193="" role="menuitem" tabindex="-1" id="user-menu-item-0" class="block px-4 py-2 text-sm text-gray-700" ng-reflect-router-link="/expenses" href="/expenses">Your Profile</a><a _ngcontent-ng-c1680601193="" href="#" role="menuitem" tabindex="-1" id="user-menu-item-1" class="block px-4 py-2 text-sm text-gray-700">Settings</a><a _ngcontent-ng-c1680601193="" href="#" role="menuitem" tabindex="-1" id="user-menu-item-2" class="block px-4 py-2 text-sm text-gray-700">Sign out</a></div></div></div></div> -->

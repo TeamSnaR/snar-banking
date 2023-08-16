@@ -3,3 +3,7 @@
 @tailwind utilities;
 
 /* You can add global styles to this file, and also import other style files */
+
+.cdk-menu {
+  @apply absolute top-12 right-8 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+}
