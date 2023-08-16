@@ -175,37 +175,19 @@
     >
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3" cdkMenu>
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a
-          href="#"
-          class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-          aria-current="page"
-          cdkMenuItem
-          >Dashboard</a
+        <ng-container
+          *ngFor="let navItem of navItems$ | async"
+          trackBy="trackByFn"
         >
-        <a
-          [routerLink]="['/expenses']"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          cdkMenuItem
-          >Expenses</a
-        >
-        <a
-          href="#"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          cdkMenuItem
-          >Projects</a
-        >
-        <a
-          href="#"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          cdkMenuItem
-          >Calendar</a
-        >
-        <a
-          href="#"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          cdkMenuItem
-          >Reports</a
-        >
+          <a
+            [routerLink]="[navItem.route]"
+            [routerLinkActive]="['bg-gray-900', 'text-white']"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            cdkMenuItem
+            >{{ navItem.label }}</a
+          >
+        </ng-container>
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
         <div class="flex items-center px-5">
