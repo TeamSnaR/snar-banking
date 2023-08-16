@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { Subject } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
+import { ShellUiNavStore } from './shell-ui-nav.store';
 
 @Component({
   selector: 'snarbanking-workspace-shell-ui-nav',
@@ -16,12 +19,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ShellUiNavStore],
 })
 export class ShellUiNavComponent {
-  showUserMenu = false;
+  #store = inject(ShellUiNavStore);
+  showUserMenu$ = this.#store.showUserMenu$;
 
   toggleUserMenu() {
-    this.showUserMenu = !this.showUserMenu;
-    console.log('toggleUserMenu', this.showUserMenu);
+    this.#store.toggleUserMenu();
   }
 }

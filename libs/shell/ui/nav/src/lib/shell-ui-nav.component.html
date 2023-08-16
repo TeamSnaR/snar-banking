@@ -99,7 +99,7 @@
             <ng-template
               cdkConnectedOverlay
               [cdkConnectedOverlayOrigin]="trigger"
-              [cdkConnectedOverlayOpen]="showUserMenu"
+              [cdkConnectedOverlayOpen]="(showUserMenu$ | async)!"
               [cdkConnectedOverlayPanelClass]="'absolute'"
               (overlayOutsideClick)="toggleUserMenu()"
             >
