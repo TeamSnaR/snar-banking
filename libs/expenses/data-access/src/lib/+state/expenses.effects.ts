@@ -8,7 +8,6 @@ import { Action, Store } from '@ngrx/store';
 import { selectExpensesEntities } from './expenses.selectors';
 import { selectRouteParam } from '@snarbanking-workspace/shared/data-access';
 import { Router } from '@angular/router';
-import { UtilToastrService } from '@snarbanking-workspace/shared/utils/toastr';
 
 @Injectable()
 export class ExpensesEffects {
@@ -19,7 +18,6 @@ export class ExpensesEffects {
   private expensesService = inject(ExpensesService);
   private router = inject(Router);
   private store = inject(Store);
-  #toastrService = inject(UtilToastrService);
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExpensesActions.initExpenses),
@@ -93,11 +91,7 @@ export class ExpensesEffects {
       this.actions$.pipe(
         ofType(ExpensesActions.addExpenseSuccess),
         map(({ expense }) => {
-          const successToast = UtilToastrService.successToast({
-            message: `Expense added successfully!`,
-            title: 'Expense added',
-          });
-          this.#toastrService.show(successToast);
+          console.log('Expense added', expense);
         })
       ),
     { dispatch: false }
