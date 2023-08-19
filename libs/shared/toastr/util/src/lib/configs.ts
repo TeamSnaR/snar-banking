@@ -22,4 +22,4 @@ export type ToastrConfig = {
 export const TOASTR_CONFIG = new InjectionToken<ToastrConfig>(
   'TOASTR CONFIGURATION'
 );
-export const TOASTR_DATA = new InjectionToken<ToastrData>('TOASTR DATA');
+export const TOASTR_DATA = new InjectionToken<ToastrData>('TOASTR_DATA');

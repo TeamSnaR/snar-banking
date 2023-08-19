@@ -16,6 +16,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
 import { appReducers } from '@snarbanking-workspace/shared/data-access';
 import { SnarbankingDefaultPageTitleStrategy } from './snarbanking-default-page-title.strategy';
+import { TOASTR_CONFIG } from '@snarbanking-workspace/shared/toastr/util';
+import { SharedToastrUiComponent } from '@snarbanking-workspace/shared/toastr/ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,5 +37,12 @@ export const appConfig: ApplicationConfig = {
     provideEffects(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: TitleStrategy, useClass: SnarbankingDefaultPageTitleStrategy },
+    {
+      provide: TOASTR_CONFIG,
+      useFactory: () => ({
+        template: SharedToastrUiComponent,
+        position: 'top-right',
+      }),
+    },
   ],
 };

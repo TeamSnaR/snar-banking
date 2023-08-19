@@ -3,7 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/toastr/util/src",
   "prefix": "snarbanking-workspace",
-  "tags": ["type:util", "scope:snarbanking-app"],
+  "tags": ["type:util", "scope:shared"],
   "projectType": "library",
   "targets": {
     "build": {

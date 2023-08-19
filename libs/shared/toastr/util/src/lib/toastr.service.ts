@@ -8,20 +8,26 @@ import { ComponentPortal } from '@angular/cdk/portal';
 })
 export class ToastrService {
   #toastrConfig = inject(TOASTR_CONFIG);
-  #overlay = inject(Overlay);
-  #injector = inject(Injector);
-
+  #overlayService = inject(Overlay);
+  #toastrComponentData?: Injector;
+  #toastrComponent?: ComponentPortal<unknown>;
   show(data: ToastrData): void {
     if (!this.#toastrConfig) {
       throw new Error('Toastr config is null or undefined');
     }
 
-    const overlay = this.#overlay.create({
+    const overlay = this.#overlayService.create({
       hasBackdrop: false,
-      positionStrategy: this.#overlay.position().global().centerHorizontally(),
+      scrollStrategy: this.#overlayService.scrollStrategies.block(),
+      positionStrategy: this.#overlayService
+        .position()
+        .global()
+        .top('3rem')
+        .right('2rem'),
+      panelClass: ['w-full'],
     });
 
-    const toastrComponentData = Injector.create({
+    this.#toastrComponentData = Injector.create({
       providers: [
         {
           provide: TOASTR_DATA,
@@ -29,12 +35,15 @@ export class ToastrService {
         },
       ],
     });
-    const toastrComponent = new ComponentPortal(
+    this.#toastrComponent = new ComponentPortal(
       this.#toastrConfig.template,
       null,
-      toastrComponentData
+      this.#toastrComponentData
     );
+    overlay.attach(this.#toastrComponent);
 
-    overlay.attach(toastrComponent);
+    setTimeout(() => {
+      overlay.detach();
+    }, 1500);
   }
 }
