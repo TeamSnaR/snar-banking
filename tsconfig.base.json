@@ -42,6 +42,9 @@
       "@snarbanking-workspace/shared/toastr/ui": [
         "libs/shared/toastr/ui/src/index.ts"
       ],
+      "@snarbanking-workspace/shared/toastr/util": [
+        "libs/shared/toastr/util/src/index.ts"
+      ],
       "@snarbanking-workspace/shared/ui/toastr": [
         "libs/shared/ui/toastr/src/index.ts"
       ],
