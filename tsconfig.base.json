@@ -39,6 +39,9 @@
       "@snarbanking-workspace/shared/data-access": [
         "libs/shared/data-access/src/index.ts"
       ],
+      "@snarbanking-workspace/shared/toastr/ui": [
+        "libs/shared/toastr/ui/src/index.ts"
+      ],
       "@snarbanking-workspace/shared/ui/toastr": [
         "libs/shared/ui/toastr/src/index.ts"
       ],
