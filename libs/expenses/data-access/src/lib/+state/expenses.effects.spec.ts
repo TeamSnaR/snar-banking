@@ -10,11 +10,20 @@ import * as ExpensesActions from './expenses.actions';
 import { ExpensesEffects } from './expenses.effects';
 import { provideHttpClient } from '@angular/common/http';
 import { ExpensesService } from '../expenses.service';
+import {
+  TOASTR_CONFIG,
+  ToastrConfig,
+} from '@snarbanking-workspace/shared/toastr/util';
+import { Type } from '@angular/core';
 
 describe('ExpensesEffects', () => {
   let actions: Observable<Action>;
   let effects: ExpensesEffects;
   let expenseService: ExpensesService;
+  const mockToastrConfig: ToastrConfig = {
+    template: null as unknown as Type<unknown>,
+    position: 'top',
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,6 +34,10 @@ describe('ExpensesEffects', () => {
         provideMockActions(() => actions),
         provideMockStore(),
         provideHttpClient(),
+        {
+          provide: TOASTR_CONFIG,
+          useValue: mockToastrConfig,
+        },
       ],
     });
 
@@ -32,6 +45,7 @@ describe('ExpensesEffects', () => {
     actions = of(ExpensesActions.initExpenses());
     expenseService = TestBed.inject(ExpensesService);
     expenseService.getExpenses = () => of([]);
+    TestBed.inject(TOASTR_CONFIG);
   });
 
   describe('init$', () => {
