@@ -1,5 +1,5 @@
 import {
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -26,11 +26,11 @@ import { ExpenseFormStore } from './expense-form.store';
     `,
   ],
   providers: [ExpensePresenterService, ExpenseFormStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
-  cdr = inject(ChangeDetectorRef);
   expenseFormData!: ExpenseFormData;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity | undefined) {
     this.expenseFormData =
@@ -45,7 +45,6 @@ export class ManageExpenseFormComponent {
     if (!this.expensePresenterService.validate(expenseForm)) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
     this.expensePresenterService.resetExpenseForm(expenseForm);
-    this.cdr.markForCheck();
     this.expenseFormSubmit.emit(expenseData);
   }
 

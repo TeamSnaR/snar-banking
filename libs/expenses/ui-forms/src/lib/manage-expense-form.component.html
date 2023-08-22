@@ -44,22 +44,15 @@
             }}</span>
           </div>
         </div>
-        <p
-          *ngIf="
-            amount.hasError('required') && (amount.touched || amount.dirty)
-          "
+        <div
+          *ngIf="amount.invalid && (amount.dirty || amount.touched)"
           class="mt-2 text-sm text-red-600"
-          id="amount-error"
         >
-          Amount is required
-        </p>
-        <p
-          *ngIf="amount.hasError('pattern') && (amount.touched || amount.dirty)"
-          class="mt-2 text-sm text-red-600"
-          id="amount-error"
-        >
-          Amount must be a number greater than 0.00
-        </p>
+          <p *ngIf="amount.hasError('required')">Amount is required.</p>
+          <p *ngIf="amount.hasError('pattern')">
+            Amount must be a number greater than 0.00
+          </p>
+        </div>
       </div>
       <div class="sm:col-span-4">
         <label
