@@ -32,14 +32,19 @@ export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
   expenseFormData!: ExpenseFormData;
-  @Input() set expenseEntity(expenseEntity: ExpensesEntity | undefined) {
+  @Input({ required: true }) set expenseEntity(expenseEntity: ExpensesEntity) {
     this.expenseFormData =
       this.expensePresenterService.initialize(expenseEntity);
-    this.expenseFormStore.initialize(this.expenseFormData);
   }
+  @Input({ required: true }) categories!: string[];
+  @Input({ required: true }) stores!: string[];
 
   @Output() expenseFormSubmit = new EventEmitter<ExpensesEntity>();
   @Output() expenseFormCancel = new EventEmitter<void>();
+
+  constructor() {
+    this.expenseFormStore.initialize(this.expenseFormData);
+  }
 
   submitExpenseForm(expenseForm: NgForm) {
     if (!this.expensePresenterService.validate(expenseForm)) return;

@@ -24,11 +24,44 @@ export class ExpensesFeatureCreateComponent {
   store = inject(Store);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
-
-  onExpenseFormSubmit(expenseEntity: ExpensesEntity) {
-    this.store.dispatch(
-      fromExpenseActions.addExpense({ expenseData: expenseEntity })
-    );
+  #createDefaultExpenseData: () => ExpensesEntity = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    const defaultCurrency = 'GBP';
+    const defaultStore = 'Lidl';
+    const defaultCategory = 'Grocery';
+    return {
+      id: Math.random().toString(36).substring(7),
+      description: `${defaultStore} ${defaultCategory} ${today}`,
+      amount: {
+        currency: defaultCurrency,
+        value: 0.0,
+      },
+      store: defaultStore,
+      category: defaultCategory,
+      purchaseDate: today,
+      items: [],
+    };
+  };
+  expenseEntity = this.#createDefaultExpenseData();
+  currencies = new Map([
+    ['USD', '$'],
+    ['EUR', '€'],
+    ['GBP', '£'],
+    ['PHP', '₱'],
+    ['MYR', 'RM'],
+  ]);
+  categories = ['Grocery', 'Travel', 'Accommodation', 'Other'];
+  groceryStores = [
+    'Tesco',
+    'Sainsbury',
+    'Asda',
+    'Morrisons',
+    'Waitrose',
+    'Lidl',
+    'Aldi',
+  ];
+  onExpenseFormSubmit(expenseData: ExpensesEntity) {
+    this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
   }
   onExpenseFormCancel() {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
