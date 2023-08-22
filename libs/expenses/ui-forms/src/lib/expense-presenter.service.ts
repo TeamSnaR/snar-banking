@@ -8,7 +8,9 @@ import { NgForm } from '@angular/forms';
 })
 export class ExpensePresenterService {
   resetExpenseForm(expenseForm: NgForm) {
-    expenseForm.resetForm();
+    expenseForm.resetForm({
+      ...this.#creeateExpenseFormData(this.#createDefaultExpenseData()),
+    });
   }
   validate(expenseForm: NgForm) {
     expenseForm.form.markAllAsTouched();
@@ -17,6 +19,7 @@ export class ExpensePresenterService {
   #expensesEntity!: ExpensesEntity;
   initialize(expenseEntity?: ExpensesEntity): ExpenseFormData {
     this.#expensesEntity = expenseEntity ?? this.#createDefaultExpenseData();
+
     return this.#creeateExpenseFormData(this.#expensesEntity);
   }
 
@@ -40,7 +43,7 @@ export class ExpensePresenterService {
         expenseForm.value.day
       ).toISOString(),
     };
-    expenseForm.resetForm();
+
     return expenseData;
   }
 

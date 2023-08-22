@@ -25,7 +25,6 @@ export class ExpensesFeatureCreateComponent {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
-  expenseEntity?: ExpensesEntity;
   onExpenseFormSubmit(expenseEntity: ExpensesEntity) {
     this.store.dispatch(
       fromExpenseActions.addExpense({ expenseData: expenseEntity })

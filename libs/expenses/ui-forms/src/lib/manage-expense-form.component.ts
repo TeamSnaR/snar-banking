@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -23,6 +30,7 @@ import { ExpenseFormStore } from './expense-form.store';
 export class ManageExpenseFormComponent {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
+  cdr = inject(ChangeDetectorRef);
   expenseFormData!: ExpenseFormData;
   @Input() set expenseEntity(expenseEntity: ExpensesEntity | undefined) {
     this.expenseFormData =
@@ -37,6 +45,7 @@ export class ManageExpenseFormComponent {
     if (!this.expensePresenterService.validate(expenseForm)) return;
     const expenseData = this.expensePresenterService.addExpense(expenseForm);
     this.expensePresenterService.resetExpenseForm(expenseForm);
+    this.cdr.markForCheck();
     this.expenseFormSubmit.emit(expenseData);
   }
 
