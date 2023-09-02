@@ -3,7 +3,4 @@
 @tailwind utilities;
 
 /* You can add global styles to this file, and also import other style files */
-
-#user-menu.cdk-menu {
-  @apply absolute top-12 right-8 z-10 mt-2 w-48 origin-top-right;
-}
+@import '@angular/cdk/overlay-prebuilt.css';
