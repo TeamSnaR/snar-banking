@@ -61,6 +61,14 @@
                 aria-expanded="false"
                 aria-haspopup="true"
                 [cdkMenuTriggerFor]="userMenu"
+                [cdkMenuPosition]="[
+                  {
+                    originX: 'center',
+                    originY: 'bottom',
+                    overlayX: 'end',
+                    overlayY: 'top'
+                  }
+                ]"
               >
                 <span class="sr-only">Open user menu</span>
                 <img
@@ -81,6 +89,7 @@
                   From: "transform opacity-100 scale-100"
                   To: "transform opacity-0 scale-95"
               -->
+            <!-- <ng-container *ngTemplateOutlet="userMenu"></ng-container> -->
             <ng-template #userMenu>
               <div
                 id="user-menu"
@@ -98,6 +107,7 @@
                   role="menuitem"
                   tabindex="-1"
                   id="user-menu-item-0"
+                  cdkMenuItem
                   >Your Profile</a
                 >
                 <a
@@ -106,6 +116,7 @@
                   role="menuitem"
                   tabindex="-1"
                   id="user-menu-item-1"
+                  cdkMenuItem
                   >Settings</a
                 >
                 <a
@@ -114,6 +125,7 @@
                   role="menuitem"
                   tabindex="-1"
                   id="user-menu-item-2"
+                  cdkMenuItem
                   >Sign out</a
                 >
               </div>
