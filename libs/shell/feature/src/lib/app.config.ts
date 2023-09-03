@@ -1,4 +1,4 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, isDevMode } from '@angular/core';
 import {
   TitleStrategy,
   provideRouter,
@@ -43,6 +43,10 @@ export const appConfig: ApplicationConfig = {
         template: SharedToastrUiComponent,
         position: 'top-right',
       }),
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'en-GB',
     },
   ],
 };

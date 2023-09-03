@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   inject,
 } from '@angular/core';
@@ -12,11 +13,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExpensePresenterService } from './expense-presenter.service';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
+import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CurrencySymbolPipe],
   templateUrl: './manage-expense-form.component.html',
   styles: [
     `
@@ -28,7 +30,7 @@ import { ExpenseFormStore } from './expense-form.store';
   providers: [ExpensePresenterService, ExpenseFormStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageExpenseFormComponent {
+export class ManageExpenseFormComponent implements OnInit {
   expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
   expenseFormData!: ExpenseFormData;
@@ -41,8 +43,7 @@ export class ManageExpenseFormComponent {
 
   @Output() expenseFormSubmit = new EventEmitter<ExpensesEntity>();
   @Output() expenseFormCancel = new EventEmitter<void>();
-
-  constructor() {
+  ngOnInit(): void {
     this.expenseFormStore.initialize(this.expenseFormData);
   }
 
