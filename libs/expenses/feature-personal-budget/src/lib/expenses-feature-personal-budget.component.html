@@ -1,0 +1,193 @@
+<ng-container *ngIf="personalBudgetStore.vm$ | async as vm">
+  <ng-container *ngFor="let incomeType of vm.incomeTypes">
+    <div class="flex items-start">
+      <h2>{{ incomeType }}</h2>
+      <div class="flex flex-col">
+        <ng-container
+          *ngIf="vm.categorizedIncomes[incomeType].incomes.length > 0"
+        >
+          <div
+            class="flex"
+            *ngFor="let income of vm.categorizedIncomes[incomeType].incomes"
+          >
+            <div>
+              {{ income.description }}
+            </div>
+            <div>
+              {{ income.amount.value | currency : income.amount.currency }}
+            </div>
+          </div>
+        </ng-container>
+        <div>
+          {{
+            vm.categorizedIncomes[incomeType].total.value
+              | currency : vm.categorizedIncomes[incomeType].total.currency
+          }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="flex">
+    <h2>Total projected expense</h2>
+    <div>
+      {{
+        vm.totalExpense.projected.value
+          | currency : vm.totalExpense.projected.currency
+      }}
+    </div>
+  </div>
+  <div class="flex">
+    <h2>Total actual expense</h2>
+    <div>
+      {{
+        vm.totalExpense.actual.value
+          | currency : vm.totalExpense.actual.currency
+      }}
+    </div>
+  </div>
+  <div class="flex">
+    <h2>Total expense difference</h2>
+    <div>
+      {{
+        vm.totalExpense.difference.value
+          | currency : vm.totalExpense.difference.currency
+      }}
+    </div>
+  </div>
+  <div class="flex">
+    <h2>Projected balance</h2>
+    <div>
+      {{
+        vm.totalBalance.projected.value
+          | currency : vm.totalBalance.projected.currency
+      }}
+    </div>
+  </div>
+  <div class="flex">
+    <h2>Actual balance</h2>
+    <div>
+      {{
+        vm.totalBalance.actual.value
+          | currency : vm.totalBalance.actual.currency
+      }}
+    </div>
+  </div>
+  <div class="flex">
+    <h2>Balance difference</h2>
+    <div>
+      {{
+        vm.totalBalance.difference.value
+          | currency : vm.totalBalance.difference.currency
+      }}
+    </div>
+  </div>
+
+  <ng-container *ngFor="let expenseCategory of vm.expenseCategories">
+    <div class="mt-8 flow-root">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                >
+                  {{ expenseCategory | uppercase }}
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Projected cost
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Actual cost
+                </th>
+                <th
+                  scope="col"
+                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                  Difference
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <ng-container
+                *ngIf="
+                  vm.categorizedExpensesWithDifference[expenseCategory].expenses
+                    .length > 0
+                "
+              >
+                <tr
+                  *ngFor="
+                    let expense of vm.categorizedExpensesWithDifference[
+                      expenseCategory
+                    ].expenses
+                  "
+                >
+                  <td
+                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
+                  >
+                    {{ expense.description }}
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {{
+                      expense.projectedCost.value
+                        | currency : expense.projectedCost.currency
+                    }}
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {{
+                      expense.actualCost.value
+                        | currency : expense.actualCost.currency
+                    }}
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {{
+                      expense.difference.value
+                        | currency : expense.difference.currency
+                    }}
+                  </td>
+                </tr>
+              </ng-container>
+              <tr>
+                <td>Total</td>
+                <td>
+                  {{
+                    vm.categorizedExpensesWithDifference[expenseCategory]
+                      .totalProjectedCost.value
+                      | currency
+                        : vm.categorizedExpensesWithDifference[expenseCategory]
+                            .totalProjectedCost.currency
+                  }}
+                </td>
+                <td>
+                  {{
+                    vm.categorizedExpensesWithDifference[expenseCategory]
+                      .totalActualCost.value
+                      | currency
+                        : vm.categorizedExpensesWithDifference[expenseCategory]
+                            .totalActualCost.currency
+                  }}
+                </td>
+                <td>
+                  {{
+                    vm.categorizedExpensesWithDifference[expenseCategory]
+                      .totalDifference.value
+                      | currency
+                        : vm.categorizedExpensesWithDifference[expenseCategory]
+                            .totalDifference.currency
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

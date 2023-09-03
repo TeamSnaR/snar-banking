@@ -21,6 +21,9 @@
       "@snarbanking-workspace/expenses/feature-details": [
         "libs/expenses/feature-details/src/index.ts"
       ],
+      "@snarbanking-workspace/expenses/feature-personal-budget": [
+        "libs/expenses/feature-personal-budget/src/index.ts"
+      ],
       "@snarbanking-workspace/expenses/feature-shell": [
         "libs/expenses/feature-shell/src/index.ts"
       ],

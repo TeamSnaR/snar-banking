@@ -21,6 +21,13 @@ export const expensesFeatureShellRoutes: Route[] = [
             (m) => m.expensesFeatureDetailsRoutes
           ),
       },
+      {
+        path: 'personal/budget',
+        loadChildren: () =>
+          import(
+            '@snarbanking-workspace/expenses/feature-personal-budget'
+          ).then((m) => m.expensesFeaturePersonalBudgetRoutes),
+      },
     ],
     providers: [
       provideState(
