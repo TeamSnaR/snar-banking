@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { ExpenseFormData } from './expense-form-data';
+import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
+import { NgForm } from '@angular/forms';
 
 export type ExpenseFormState = {
   years: number[];
@@ -10,6 +12,8 @@ export type ExpenseFormState = {
     month: number;
     day: number;
   };
+  currency: string;
+  expenseFormData?: ExpenseFormData;
 };
 const INITIAL_STATE: ExpenseFormState = {
   years: Array.from({ length: 6 }, (_, i) => new Date().getFullYear() - i),
@@ -22,6 +26,7 @@ const INITIAL_STATE: ExpenseFormState = {
     month: new Date().getMonth() + 1,
     day: new Date().getDate(),
   },
+  currency: 'GBP',
 };
 
 @Injectable()
@@ -35,6 +40,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       return Array.from({ length: daysInMonth }, (_, i) => i + 1);
     }
   );
+  readonly currency$ = this.select((state) => state.currency);
   constructor() {
     super(INITIAL_STATE);
   }
@@ -47,6 +53,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
         month: expenseFormData.month,
         day: expenseFormData.day,
       },
+      expenseFormData,
     })
   );
 
@@ -63,4 +70,43 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       return { ...state, purchaseDate };
     });
   }
+
+  readonly validate = (expenseForm: NgForm): boolean => {
+    expenseForm.form.markAllAsTouched();
+    return !!expenseForm.valid;
+  };
+
+  readonly addExpense = (expenseForm: NgForm): ExpenseFormData => {
+    const expenseToAdd = expenseForm.value;
+    const expenseFormData = {
+      description: expenseToAdd.description,
+      value: +expenseToAdd.amount,
+      currency: expenseToAdd.currency,
+      category: expenseToAdd.category,
+      store: expenseToAdd.store,
+      year: expenseToAdd.year,
+      month: expenseToAdd.month,
+      day: expenseToAdd.day,
+      purchaseDate: new Date(
+        expenseToAdd.year,
+        expenseToAdd.month,
+        expenseToAdd.day
+      ).toISOString(),
+    };
+    return expenseFormData;
+  };
+
+  readonly resetExpenseForm = (expenseForm: NgForm): void => {
+    const expenseFormData = this.get().expenseFormData;
+    expenseForm.reset({
+      description: expenseFormData?.description,
+      amount: 0,
+      currency: expenseFormData?.currency,
+      category: expenseFormData?.category,
+      store: expenseFormData?.store,
+      year: expenseFormData?.year,
+      month: expenseFormData?.month,
+      day: expenseFormData?.day,
+    });
+  };
 }

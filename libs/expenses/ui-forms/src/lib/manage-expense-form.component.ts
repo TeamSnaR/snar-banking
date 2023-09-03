@@ -10,7 +10,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExpensePresenterService } from './expense-presenter.service';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
 import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
@@ -27,30 +26,26 @@ import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
       }
     `,
   ],
-  providers: [ExpensePresenterService, ExpenseFormStore],
+  providers: [ExpenseFormStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageExpenseFormComponent implements OnInit {
-  expensePresenterService = inject(ExpensePresenterService);
   expenseFormStore = inject(ExpenseFormStore);
-  expenseFormData!: ExpenseFormData;
-  @Input({ required: true }) set expenseEntity(expenseEntity: ExpensesEntity) {
-    this.expenseFormData =
-      this.expensePresenterService.initialize(expenseEntity);
-  }
+  @Input({ required: true }) expenseFormData!: ExpenseFormData;
   @Input({ required: true }) categories!: string[];
   @Input({ required: true }) stores!: string[];
 
-  @Output() expenseFormSubmit = new EventEmitter<ExpensesEntity>();
+  @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
   @Output() expenseFormCancel = new EventEmitter<void>();
+
   ngOnInit(): void {
     this.expenseFormStore.initialize(this.expenseFormData);
   }
 
   submitExpenseForm(expenseForm: NgForm) {
-    if (!this.expensePresenterService.validate(expenseForm)) return;
-    const expenseData = this.expensePresenterService.addExpense(expenseForm);
-    this.expensePresenterService.resetExpenseForm(expenseForm);
+    if (!this.expenseFormStore.validate(expenseForm)) return;
+    const expenseData = this.expenseFormStore.addExpense(expenseForm);
+    this.expenseFormStore.resetExpenseForm(expenseForm);
     this.expenseFormSubmit.emit(expenseData);
   }
 

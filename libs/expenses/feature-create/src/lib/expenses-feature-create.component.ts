@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
-import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-forms';
+import {
+  ExpenseFormData,
+  ManageExpenseFormComponent,
+} from '@snarbanking-workspace/expenses/ui-forms';
 import { Store } from '@ngrx/store';
 import * as fromExpenseActions from '@snarbanking-workspace/expenses/data-access';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +45,24 @@ export class ExpensesFeatureCreateComponent {
       items: [],
     };
   };
-  expenseEntity = this.#createDefaultExpenseData();
+  #createExpenseFormData = (expenseEntity: ExpensesEntity): ExpenseFormData => {
+    const purchaseDate = new Date(expenseEntity.purchaseDate);
+    const expenseFormData = {
+      description: expenseEntity.description,
+      value: expenseEntity.amount.value,
+      currency: expenseEntity.amount.currency,
+      category: expenseEntity.category,
+      store: expenseEntity.store,
+      purchaseDate: expenseEntity.purchaseDate,
+      year: purchaseDate.getFullYear(),
+      month: purchaseDate.getMonth() + 1,
+      day: purchaseDate.getDate(),
+    };
+    return expenseFormData;
+  };
+  expenseFormData = this.#createExpenseFormData(
+    this.#createDefaultExpenseData()
+  );
   currencies = new Map([
     ['USD', '$'],
     ['EUR', '€'],
@@ -60,8 +80,22 @@ export class ExpensesFeatureCreateComponent {
     'Lidl',
     'Aldi',
   ];
-  onExpenseFormSubmit(expenseData: ExpensesEntity) {
-    this.store.dispatch(fromExpenseActions.addExpense({ expenseData }));
+  onExpenseFormSubmit(expenseData: ExpenseFormData) {
+    const expenseEntity = {
+      ...this.#createDefaultExpenseData(),
+      description: expenseData.description,
+      amount: {
+        value: expenseData.value,
+        currency: expenseData.currency,
+      },
+      category: expenseData.category,
+      store: expenseData.store,
+      purchaseDate: expenseData.purchaseDate,
+    };
+
+    this.store.dispatch(
+      fromExpenseActions.addExpense({ expenseData: expenseEntity })
+    );
   }
   onExpenseFormCancel() {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });

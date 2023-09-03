@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageExpenseFormComponent } from './manage-expense-form.component';
 import { ExpenseFormStore } from './expense-form.store';
-import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
+import { ExpenseFormData } from './expense-form-data';
 
 describe('ManageExpenseFormComponent', () => {
   let component: ManageExpenseFormComponent;
   let fixture: ComponentFixture<ManageExpenseFormComponent>;
-  const createExpensesEntity = (id: string, description = '') =>
+  const createExpenseFormData = (id: string): ExpenseFormData =>
     ({
       id,
-      description: description || `name-${id}`,
-      amount: {
-        currency: 'GBP',
-        value: 1.0,
-      },
+      description: 'expenseEntity.description',
+      value: 1,
+      currency: 'GBP',
       category: 'Grocery',
       store: 'Lidl',
-      items: [],
-      purchaseDate: new Date().toISOString(),
-    } as ExpensesEntity);
+      purchaseDate: new Date().toISOString().slice(0, 10),
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      day: new Date().getDate(),
+    } as ExpenseFormData);
 
   const mockExpenseFormStore = {
     initialize: jest.fn(),
@@ -36,7 +36,7 @@ describe('ManageExpenseFormComponent', () => {
     TestBed.inject(ExpenseFormStore);
     fixture = TestBed.createComponent(ManageExpenseFormComponent);
     component = fixture.componentInstance;
-    component.expenseEntity = createExpensesEntity('1');
+    component.expenseFormData = createExpenseFormData('1');
     fixture.detectChanges();
   });
 
