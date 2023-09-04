@@ -30,12 +30,17 @@
                   "type:shell",
                   "type:feature",
                   "type:ui",
+                  "type:util",
                   "type:data-access"
                 ]
               },
               {
                 "sourceTag": "type:feature",
-                "onlyDependOnLibsWithTags": ["type:util", "type:data-access"]
+                "onlyDependOnLibsWithTags": [
+                  "type:util",
+                  "type:data-access",
+                  "type:ui"
+                ]
               },
               {
                 "sourceTag": "type:ui",

@@ -22,6 +22,7 @@ describe('Expenses Reducer', () => {
     category: 'Grocery',
     store: 'Lidl',
     items: [],
+    purchaseDate: new Date().toISOString(),
   });
 
   describe('valid Expenses actions', () => {

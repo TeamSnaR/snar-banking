@@ -20,6 +20,7 @@ describe('Expenses Selectors', () => {
       category: 'Grocery',
       store: 'Lidl',
       items: [],
+      purchaseDate: new Date().toISOString(),
     } as ExpensesEntity);
 
   let state: ExpensesPartialState;

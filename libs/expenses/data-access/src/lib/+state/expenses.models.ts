@@ -7,6 +7,7 @@ export interface ExpensesEntity {
   amount: Money;
   category: string;
   store: string;
+  purchaseDate: string;
   items: ExpenseItemEntity[];
 }
 
