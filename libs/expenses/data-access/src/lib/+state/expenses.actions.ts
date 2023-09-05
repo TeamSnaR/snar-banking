@@ -1,5 +1,7 @@
 import { createAction, emptyProps, props } from '@ngrx/store';
 import { ExpensesEntity } from './expenses.models';
+import { TemplateRef, Type } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
 
 export const initExpenses = createAction('[Expenses Page] Init');
 
@@ -42,4 +44,9 @@ export const addExpenseSuccess = createAction(
 export const addExpenseFailure = createAction(
   '[Expenses/API] Add Expense Failure',
   props<{ error: string }>()
+);
+
+export const createNewExpense = createAction(
+  '[Expenses Feature] Create New Expense',
+  props<{ component: ComponentType<unknown> | TemplateRef<unknown> }>()
 );

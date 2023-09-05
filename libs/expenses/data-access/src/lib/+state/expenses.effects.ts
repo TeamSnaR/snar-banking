@@ -9,6 +9,7 @@ import { selectExpensesEntities } from './expenses.selectors';
 import { selectRouteParam } from '@snarbanking-workspace/shared/data-access';
 import { Router } from '@angular/router';
 import { ToastrService } from '@snarbanking-workspace/shared/toastr/util';
+import { UtilDialogService } from '@snarbanking-workspace/shared/util-dialog';
 
 @Injectable()
 export class ExpensesEffects {
@@ -21,6 +22,7 @@ export class ExpensesEffects {
   private store = inject(Store);
 
   #toastrService = inject(ToastrService);
+  #dialogService = inject(UtilDialogService);
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExpensesActions.initExpenses),
@@ -102,4 +104,20 @@ export class ExpensesEffects {
       ),
     { dispatch: false }
   );
+
+  // showCreateExpenseDialog = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(ExpensesActions.createNewExpense),
+  //       map(({ component }) => {
+  //         this.#dialogService.open(component, {
+  //           data: {
+  //             title: 'Create new expense',
+  //             message: 'Please fill in the form below',
+  //           },
+  //         });
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 }
