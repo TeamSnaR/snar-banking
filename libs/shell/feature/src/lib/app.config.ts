@@ -18,6 +18,12 @@ import { appReducers } from '@snarbanking-workspace/shared/data-access';
 import { SnarbankingDefaultPageTitleStrategy } from './snarbanking-default-page-title.strategy';
 import { TOASTR_CONFIG } from '@snarbanking-workspace/shared/toastr/util';
 import { SharedToastrUiComponent } from '@snarbanking-workspace/shared/toastr/ui';
+import {
+  DEFAULT_DIALOG_CONFIG,
+  DIALOG_SCROLL_STRATEGY,
+} from '@angular/cdk/dialog';
+import { Overlay, ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,6 +43,7 @@ export const appConfig: ApplicationConfig = {
     provideEffects(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: TitleStrategy, useClass: SnarbankingDefaultPageTitleStrategy },
+    provideAnimations(),
     {
       provide: TOASTR_CONFIG,
       useFactory: () => ({
@@ -47,6 +54,12 @@ export const appConfig: ApplicationConfig = {
     {
       provide: LOCALE_ID,
       useValue: 'en-GB',
+    },
+    {
+      provide: DEFAULT_DIALOG_CONFIG,
+      useValue: {
+        panelClass: 'dialog',
+      },
     },
   ],
 };

@@ -33,6 +33,9 @@
       "@snarbanking-workspace/expenses/feature-view": [
         "libs/expenses/feature-view/src/index.ts"
       ],
+      "@snarbanking-workspace/expenses/ui-expense-form": [
+        "libs/expenses/ui-expense-form/src/index.ts"
+      ],
       "@snarbanking-workspace/expenses/ui-forms": [
         "libs/expenses/ui-forms/src/index.ts"
       ],
