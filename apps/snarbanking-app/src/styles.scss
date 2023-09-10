@@ -8,3 +8,7 @@ input[type='number'].ng-invalid.ng-touched {
 
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/cdk/overlay-prebuilt.css';
+
+.dialog {
+  @apply h-full pointer-events-auto w-screen max-w-md;
+}

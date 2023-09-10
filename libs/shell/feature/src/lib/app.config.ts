@@ -1,4 +1,9 @@
-import { ApplicationConfig, LOCALE_ID, isDevMode } from '@angular/core';
+import {
+  ApplicationConfig,
+  LOCALE_ID,
+  importProvidersFrom,
+  isDevMode,
+} from '@angular/core';
 import {
   TitleStrategy,
   provideRouter,
@@ -21,6 +26,7 @@ import { SharedToastrUiComponent } from '@snarbanking-workspace/shared/toastr/ui
 import {
   DEFAULT_DIALOG_CONFIG,
   DIALOG_SCROLL_STRATEGY,
+  DialogModule,
 } from '@angular/cdk/dialog';
 import { Overlay, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -44,6 +50,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     { provide: TitleStrategy, useClass: SnarbankingDefaultPageTitleStrategy },
     provideAnimations(),
+    importProvidersFrom(DialogModule),
     {
       provide: TOASTR_CONFIG,
       useFactory: () => ({

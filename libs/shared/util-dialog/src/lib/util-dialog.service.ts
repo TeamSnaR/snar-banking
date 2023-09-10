@@ -1,6 +1,15 @@
-import { Injectable, TemplateRef, Type, inject } from '@angular/core';
-import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { ComponentType } from '@angular/cdk/portal';
+import {
+  EnvironmentInjector,
+  Injectable,
+  Injector,
+  Type,
+  createComponent,
+  inject,
+} from '@angular/core';
+import { Dialog } from '@angular/cdk/dialog';
+import { UtilDialogRef } from './util-dialog-ref.service';
+import { UtilDialogContainerComponent } from './util-dialog-container.component';
+import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 
 type OpenConfig = {
   data?: {
@@ -12,14 +21,37 @@ type OpenConfig = {
   providedIn: 'root',
 })
 export class UtilDialogService {
-  // #cdkDialog = inject(Dialog);
-  // open(
-  //   component: ComponentType<unknown> | TemplateRef<unknown>,
-  //   config?: OpenConfig
-  // ) {
-  //   return this.#cdkDialog.open(component, {
-  //     width: '500px',
-  //     height: '500px',
-  //   });
-  // }
+  #dialog = inject(Dialog);
+  open(component: Type<unknown>) {
+    const utilDialogRef = new UtilDialogRef();
+
+    const ref = this.#dialog.open(UtilDialogContainerComponent, {
+      positionStrategy: new GlobalPositionStrategy()
+        .centerHorizontally()
+        .right('0'),
+      hasBackdrop: true,
+      backdropClass: ['bg-black', 'bg-opacity-50'],
+      data: {
+        title: 'Create new expense',
+        content: {
+          component,
+          contentData: {
+            text: 'Hello world',
+          },
+        },
+      },
+      disableClose: true,
+      injector: Injector.create({
+        providers: [
+          {
+            provide: UtilDialogRef,
+            useValue: utilDialogRef,
+          },
+        ],
+      }),
+    });
+    utilDialogRef.setDialogRef(ref);
+
+    return utilDialogRef;
+  }
 }

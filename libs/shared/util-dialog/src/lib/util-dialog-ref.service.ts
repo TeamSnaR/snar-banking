@@ -4,6 +4,7 @@ import { ComponentType, Portal } from '@angular/cdk/portal';
 import { EventEmitter, Injectable, InjectionToken, Type } from '@angular/core';
 import { Subject, filter, take } from 'rxjs';
 import { AfterViewInit } from '@angular/core';
+import { UtilDialogContainerComponent } from './util-dialog-container.component';
 
 export interface IAnimatedDialogConfig {
   animationStateChanged: EventEmitter<AnimationEvent>;
@@ -14,15 +15,14 @@ export interface IAnimatedDialogConfig {
   providedIn: 'root',
 })
 export class UtilDialogRef {
-  setDialogRef(ref: DialogRef<unknown, unknown>) {
+  setDialogRef(ref: DialogRef<unknown, UtilDialogContainerComponent>) {
     this.#dialogRef = ref;
 
     this.#dialogRef.backdropClick.pipe(take(1)).subscribe(() => this.close());
   }
   private _beforeClose = new Subject<void>();
   private _afterClosed = new Subject<void>();
-  // componentInstance: IAnimatedDialogConfig | undefined;
-  #dialogRef: DialogRef<unknown, unknown> | undefined;
+  #dialogRef: DialogRef<unknown, UtilDialogContainerComponent> | undefined;
 
   close() {
     if (!this.#dialogRef) {

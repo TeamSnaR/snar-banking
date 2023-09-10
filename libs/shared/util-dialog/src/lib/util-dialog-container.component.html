@@ -1,0 +1,93 @@
+<div class="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6">
+  <ng-template [cdkPortalOutlet]="headerPortal"></ng-template>
+  <div class="relative mt-6 flex-1 px-4 sm:px-6">
+    <ng-template
+      [cdkPortalOutlet]="contentPortal"
+      (attached)="contentAttached($event)"
+    ></ng-template>
+  </div>
+</div>
+<ng-template [cdkPortalOutlet]="footerPortal"></ng-template>
+<ng-template #defaultHeader let-header="header">
+  <div class="px-4 sm:px-6">
+    <div class="flex items-start justify-between">
+      <h2
+        class="text-base font-semibold leading-6 text-gray-900"
+        id="slide-over-title"
+      >
+        {{ header.title }}
+      </h2>
+      <div class="ml-3 flex h-7 items-center">
+        <button
+          type="button"
+          class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          (click)="utilDialogRef.close()"
+        >
+          <span class="absolute -inset-2.5"></span>
+          <span class="sr-only">Close panel</span>
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #contentPlaceholder>
+  <div class="absolute inset-0 px-4 py-6 sm:px-6">
+    <div
+      class="relative h-full overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75"
+    >
+      <svg
+        class="absolute inset-0 h-full w-full stroke-gray-900/10"
+        fill="none"
+      >
+        <defs>
+          <pattern
+            id="pattern-66b0ac0d-19d8-4c6d-b21c-fae522482f7c"
+            x="0"
+            y="0"
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M-3 13 15-5M-5 5l18-18M-1 21 17 3"></path>
+          </pattern>
+        </defs>
+        <rect
+          stroke="none"
+          fill="url(#pattern-66b0ac0d-19d8-4c6d-b21c-fae522482f7c)"
+          width="100%"
+          height="100%"
+        ></rect>
+      </svg>
+    </div>
+  </div>
+</ng-template>
+<ng-template #defaultFooter let-footerData="footerData">
+  <div class="flex flex-shrink-0 justify-end px-4 py-4">
+    <button
+      type="button"
+      class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
+    >
+      {{ footerData.buttonCancel.text }}
+    </button>
+    <button
+      type="submit"
+      class="ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+    >
+      {{ footerData.buttonSubmit.text }}
+    </button>
+  </div>
+</ng-template>
