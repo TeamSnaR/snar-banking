@@ -19,46 +19,40 @@ import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
   standalone: true,
   imports: [CommonModule, FormsModule, CurrencySymbolPipe],
   templateUrl: './manage-expense-form.component.html',
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-    `,
-  ],
   providers: [ExpenseFormStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageExpenseFormComponent implements OnInit {
-  expenseFormStore = inject(ExpenseFormStore);
-  @Input({ required: true }) expenseFormData!: ExpenseFormData;
-  @Input({ required: true }) categories!: string[];
-  @Input({ required: true }) stores!: string[];
+  // expenseFormStore = inject(ExpenseFormStore);
+  // @Input({ required: true }) expenseFormData!: ExpenseFormData;
+  // @Input({ required: true }) categories!: string[];
+  // @Input({ required: true }) stores!: string[];
 
-  @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
-  @Output() expenseFormCancel = new EventEmitter<void>();
+  // @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
+  // @Output() expenseFormCancel = new EventEmitter<void>();
 
   ngOnInit(): void {
-    this.expenseFormStore.initialize(this.expenseFormData);
+    console.log('init');
+    // this.expenseFormStore.initialize(this.expenseFormData);
   }
 
-  submitExpenseForm(expenseForm: NgForm) {
-    if (!this.expenseFormStore.validate(expenseForm)) return;
-    const expenseData = this.expenseFormStore.addExpense(expenseForm);
-    this.expenseFormStore.resetExpenseForm(expenseForm);
-    this.expenseFormSubmit.emit(expenseData);
-  }
+  // submitExpenseForm(expenseForm: NgForm) {
+  //   if (!this.expenseFormStore.validate(expenseForm)) return;
+  //   const expenseData = this.expenseFormStore.addExpense(expenseForm);
+  //   this.expenseFormStore.resetExpenseForm(expenseForm);
+  //   this.expenseFormSubmit.emit(expenseData);
+  // }
 
-  cancelExpenseForm() {
-    this.expenseFormCancel.emit();
-  }
+  // cancelExpenseForm() {
+  //   this.expenseFormCancel.emit();
+  // }
 
-  monthSelected($event: Event) {
-    const month = ($event.target as HTMLInputElement).value;
-    this.expenseFormStore.selectMonth(+month);
-  }
-  yearSelected($event: Event) {
-    const year = ($event.target as HTMLInputElement).value;
-    this.expenseFormStore.selectYear(+year);
-  }
+  // monthSelected($event: Event) {
+  //   const month = ($event.target as HTMLInputElement).value;
+  //   this.expenseFormStore.selectMonth(+month);
+  // }
+  // yearSelected($event: Event) {
+  //   const year = ($event.target as HTMLInputElement).value;
+  //   this.expenseFormStore.selectYear(+year);
+  // }
 }

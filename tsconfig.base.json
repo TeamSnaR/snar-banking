@@ -45,6 +45,9 @@
       "@snarbanking-workspace/shared/toastr/util": [
         "libs/shared/toastr/util/src/index.ts"
       ],
+      "@snarbanking-workspace/shared/ui-slide-out": [
+        "libs/shared/ui-slide-out/src/index.ts"
+      ],
       "@snarbanking-workspace/shared/util-pipes": [
         "libs/shared/util-pipes/src/index.ts"
       ],

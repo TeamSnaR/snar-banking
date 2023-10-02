@@ -36,7 +36,7 @@ describe('ManageExpenseFormComponent', () => {
     TestBed.inject(ExpenseFormStore);
     fixture = TestBed.createComponent(ManageExpenseFormComponent);
     component = fixture.componentInstance;
-    component.expenseFormData = createExpenseFormData('1');
+    // component.expenseFormData = createExpenseFormData('1');
     fixture.detectChanges();
   });
 
