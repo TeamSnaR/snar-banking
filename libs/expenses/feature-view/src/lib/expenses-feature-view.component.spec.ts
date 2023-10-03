@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExpensesFeatureViewComponent } from './expenses-feature-view.component';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { UiSlideOutService } from '@snarbanking-workspace/shared/ui-slide-out';
+import { SlideOutService } from '@snarbanking-workspace/shared/ui';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 
 describe('ExpensesFeatureViewComponent', () => {
@@ -17,7 +17,7 @@ describe('ExpensesFeatureViewComponent', () => {
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
-    TestBed.inject(UiSlideOutService);
+    TestBed.inject(SlideOutService);
     TestBed.inject(Dialog);
     fixture = TestBed.createComponent(ExpensesFeatureViewComponent);
     component = fixture.componentInstance;

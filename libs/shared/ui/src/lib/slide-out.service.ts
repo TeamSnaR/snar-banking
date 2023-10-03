@@ -5,14 +5,14 @@ import { Overlay } from '@angular/cdk/overlay';
 @Injectable({
   providedIn: 'root',
 })
-export class UiSlideOutService {
+export class SlideOutService {
   #dialog = inject(Dialog);
   #overlay = inject(Overlay);
 
   open(component: Type<unknown>) {
     return this.#dialog.open(component, {
       positionStrategy: this.#overlay.position().global().end(),
-      panelClass: ['pointer-events-auto', 'max-w-md'],
+      panelClass: ['pointer-events-auto', 'w-screen', 'max-w-md'],
     });
   }
 }

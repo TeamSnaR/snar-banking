@@ -13,6 +13,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
 import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -30,10 +31,25 @@ export class ManageExpenseFormComponent implements OnInit {
 
   // @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
   // @Output() expenseFormCancel = new EventEmitter<void>();
-
+  #expenseFormStore = inject(ExpenseFormStore);
+  #uiDialogRef = inject(DialogRef);
+  vm$ = this.#expenseFormStore.vm$;
   ngOnInit(): void {
     console.log('init');
     // this.expenseFormStore.initialize(this.expenseFormData);
+  }
+
+  cancel() {
+    this.close();
+  }
+
+  close() {
+    this.#uiDialogRef.close();
+  }
+
+  save() {
+    // this.expenseFormStore.submit();
+    this.#uiDialogRef.close();
   }
 
   // submitExpenseForm(expenseForm: NgForm) {
@@ -43,16 +59,12 @@ export class ManageExpenseFormComponent implements OnInit {
   //   this.expenseFormSubmit.emit(expenseData);
   // }
 
-  // cancelExpenseForm() {
-  //   this.expenseFormCancel.emit();
-  // }
-
-  // monthSelected($event: Event) {
-  //   const month = ($event.target as HTMLInputElement).value;
-  //   this.expenseFormStore.selectMonth(+month);
-  // }
-  // yearSelected($event: Event) {
-  //   const year = ($event.target as HTMLInputElement).value;
-  //   this.expenseFormStore.selectYear(+year);
-  // }
+  monthSelected($event: Event) {
+    const month = ($event.target as HTMLInputElement).value;
+    this.#expenseFormStore.selectMonth(+month);
+  }
+  yearSelected($event: Event) {
+    const year = ($event.target as HTMLInputElement).value;
+    this.#expenseFormStore.selectYear(+year);
+  }
 }

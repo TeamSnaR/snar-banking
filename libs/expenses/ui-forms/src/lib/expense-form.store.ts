@@ -13,6 +13,8 @@ export type ExpenseFormState = {
     day: number;
   };
   currency: string;
+  categories: string[];
+  locations: string[];
   expenseFormData?: ExpenseFormData;
 };
 const INITIAL_STATE: ExpenseFormState = {
@@ -27,6 +29,16 @@ const INITIAL_STATE: ExpenseFormState = {
     day: new Date().getDate(),
   },
   currency: 'GBP',
+  categories: ['Grocery', 'Travel', 'Accommodation', 'Other'],
+  locations: [
+    'Tesco',
+    'Sainsbury',
+    'Asda',
+    'Morrisons',
+    'Waitrose',
+    'Lidl',
+    'Aldi',
+  ],
 };
 
 @Injectable()
@@ -40,7 +52,25 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       return Array.from({ length: daysInMonth }, (_, i) => i + 1);
     }
   );
-  readonly currency$ = this.select((state) => state.currency);
+  readonly dateValues$ = this.select(
+    this.days$,
+    this.months$,
+    this.years$,
+    (days, months, years) => ({ days, months, years })
+  );
+  readonly vm$ = this.select(
+    this.dateValues$,
+    this.state$,
+    ({ days, months, years }, state) => ({
+      days,
+      months,
+      years,
+      currency: state.currency,
+      categories: state.categories,
+      locations: state.locations,
+    })
+  );
+
   constructor() {
     super(INITIAL_STATE);
   }

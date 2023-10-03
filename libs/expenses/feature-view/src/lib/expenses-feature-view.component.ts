@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
 import * as fromActions from '@snarbanking-workspace/expenses/data-access';
 import { RouterModule } from '@angular/router';
-import { UiSlideOutService } from '@snarbanking-workspace/shared/ui-slide-out';
+import { SlideOutService } from '@snarbanking-workspace/shared/ui';
 import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-forms';
 @Component({
   selector: 'snarbanking-workspace-expenses-feature-view',
@@ -22,10 +22,7 @@ import { ManageExpenseFormComponent } from '@snarbanking-workspace/expenses/ui-f
 })
 export class ExpensesFeatureViewComponent {
   public vm$ = this.expensesStore.select(fromSelectors.selectExpensesVm);
-  constructor(
-    public expensesStore: Store,
-    private slideOut: UiSlideOutService
-  ) {}
+  constructor(public expensesStore: Store, private slideOut: SlideOutService) {}
 
   public addExpense() {
     // this.expensesStore.dispatch(fromActions.addExpense());

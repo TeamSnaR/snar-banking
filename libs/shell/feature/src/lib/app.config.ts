@@ -18,7 +18,7 @@ import { appReducers } from '@snarbanking-workspace/shared/data-access';
 import { SnarbankingDefaultPageTitleStrategy } from './snarbanking-default-page-title.strategy';
 import { TOASTR_CONFIG } from '@snarbanking-workspace/shared/toastr/util';
 import { SharedToastrUiComponent } from '@snarbanking-workspace/shared/toastr/ui';
-import { provideSlideOut } from '@snarbanking-workspace/shared/ui-slide-out';
+import { provideSlideOut } from '@snarbanking-workspace/shared/ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
