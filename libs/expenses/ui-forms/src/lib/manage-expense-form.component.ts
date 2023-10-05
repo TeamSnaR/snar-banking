@@ -1,19 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ExpenseFormData } from './expense-form-data';
 import { ExpenseFormStore } from './expense-form.store';
 import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
-import { DialogRef } from '@angular/cdk/dialog';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -31,12 +26,12 @@ export class ManageExpenseFormComponent implements OnInit {
 
   // @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
   // @Output() expenseFormCancel = new EventEmitter<void>();
+  #dialogData = inject(DIALOG_DATA);
   #expenseFormStore = inject(ExpenseFormStore);
   #uiDialogRef = inject(DialogRef);
   vm$ = this.#expenseFormStore.vm$;
   ngOnInit(): void {
-    console.log('init');
-    // this.expenseFormStore.initialize(this.expenseFormData);
+    this.#expenseFormStore.initialize(this.#dialogData);
   }
 
   cancel() {
@@ -47,9 +42,9 @@ export class ManageExpenseFormComponent implements OnInit {
     this.#uiDialogRef.close();
   }
 
-  save() {
+  save(expenseForm: NgForm) {
     // this.expenseFormStore.submit();
-    this.#uiDialogRef.close();
+    this.#uiDialogRef.close(expenseForm.form.value);
   }
 
   // submitExpenseForm(expenseForm: NgForm) {

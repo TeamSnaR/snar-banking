@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { ExpenseFormData } from './expense-form-data';
-import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import { NgForm } from '@angular/forms';
 
 export type ExpenseFormState = {
@@ -68,6 +67,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       currency: state.currency,
       categories: state.categories,
       locations: state.locations,
+      expenseFormData: state.expenseFormData,
     })
   );
 

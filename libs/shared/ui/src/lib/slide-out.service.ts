@@ -9,10 +9,11 @@ export class SlideOutService {
   #dialog = inject(Dialog);
   #overlay = inject(Overlay);
 
-  open(component: Type<unknown>) {
+  open<TComponent, TData>(component: Type<TComponent>, data: TData) {
     return this.#dialog.open(component, {
       positionStrategy: this.#overlay.position().global().end(),
       panelClass: ['pointer-events-auto', 'w-screen', 'max-w-md'],
+      data: data,
     });
   }
 }
