@@ -43,16 +43,15 @@ export class ManageExpenseFormComponent implements OnInit {
   }
 
   save(expenseForm: NgForm) {
-    // this.expenseFormStore.submit();
-    this.#uiDialogRef.close(expenseForm.form.value);
+    this.submitExpenseForm(expenseForm);
   }
 
-  // submitExpenseForm(expenseForm: NgForm) {
-  //   if (!this.expenseFormStore.validate(expenseForm)) return;
-  //   const expenseData = this.expenseFormStore.addExpense(expenseForm);
-  //   this.expenseFormStore.resetExpenseForm(expenseForm);
-  //   this.expenseFormSubmit.emit(expenseData);
-  // }
+  submitExpenseForm(expenseForm: NgForm) {
+    if (!this.#expenseFormStore.validate(expenseForm)) return;
+    const expenseData = this.#expenseFormStore.addExpense(expenseForm);
+    this.#uiDialogRef.close(expenseData);
+    this.#expenseFormStore.resetExpenseForm(expenseForm);
+  }
 
   monthSelected($event: Event) {
     const month = ($event.target as HTMLInputElement).value;

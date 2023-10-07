@@ -108,10 +108,11 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
 
   readonly addExpense = (expenseForm: NgForm): ExpenseFormData => {
     const expenseToAdd = expenseForm.value;
-    const expenseFormData = {
+    const expenseFormData = this.get().expenseFormData;
+    const expense = {
       description: expenseToAdd.description,
       value: +expenseToAdd.amount,
-      currency: expenseToAdd.currency,
+      currency: expenseFormData!.currency,
       category: expenseToAdd.category,
       store: expenseToAdd.store,
       year: expenseToAdd.year,
@@ -123,7 +124,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
         expenseToAdd.day
       ).toISOString(),
     };
-    return expenseFormData;
+    return expense;
   };
 
   readonly resetExpenseForm = (expenseForm: NgForm): void => {
