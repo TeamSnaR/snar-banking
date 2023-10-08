@@ -49,7 +49,7 @@ export class ExpensesFeatureCreateComponent {
     const purchaseDate = new Date(expenseEntity.purchaseDate);
     const expenseFormData = {
       description: expenseEntity.description,
-      value: expenseEntity.amount.value,
+      amount: expenseEntity.amount.value,
       currency: expenseEntity.amount.currency,
       category: expenseEntity.category,
       store: expenseEntity.store,
@@ -85,7 +85,7 @@ export class ExpensesFeatureCreateComponent {
       ...this.#createDefaultExpenseData(),
       description: expenseData.description,
       amount: {
-        value: expenseData.value,
+        value: expenseData.amount,
         currency: expenseData.currency,
       },
       category: expenseData.category,

@@ -20,13 +20,6 @@ import { SlideOutRef } from '@snarbanking-workspace/shared/ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageExpenseFormComponent implements OnInit {
-  // expenseFormStore = inject(ExpenseFormStore);
-  // @Input({ required: true }) expenseFormData!: ExpenseFormData;
-  // @Input({ required: true }) categories!: string[];
-  // @Input({ required: true }) stores!: string[];
-
-  // @Output() expenseFormSubmit = new EventEmitter<ExpenseFormData>();
-  // @Output() expenseFormCancel = new EventEmitter<void>();
   #dialogData = inject(DIALOG_DATA);
   #expenseFormStore = inject(ExpenseFormStore);
   #slideOutRef = inject(SlideOutRef);
@@ -49,9 +42,8 @@ export class ManageExpenseFormComponent implements OnInit {
 
   submitExpenseForm(expenseForm: NgForm) {
     if (!this.#expenseFormStore.validate(expenseForm)) return;
-    const expenseData = this.#expenseFormStore.addExpense(expenseForm);
+    const expenseData = this.#expenseFormStore.saveExpense(expenseForm);
     this.#slideOutRef.close(expenseData);
-    this.#expenseFormStore.resetExpenseForm(expenseForm);
   }
 
   monthSelected($event: Event) {

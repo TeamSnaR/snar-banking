@@ -5,7 +5,11 @@ import { Store } from '@ngrx/store';
 import { SlideOutService } from '@snarbanking-workspace/shared/ui';
 import { Observable, concatMap, of } from 'rxjs';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
-import { ExpenseFormData } from '@snarbanking-workspace/expenses/ui-forms';
+import {
+  ExpenseFormData,
+  ManageExpenseFormComponent,
+} from '@snarbanking-workspace/expenses/ui-forms';
+import * as fromActions from '@snarbanking-workspace/expenses/data-access';
 
 export const createDefaultExpenseData: () => ExpensesEntity = () => {
   const today = new Date().toISOString().slice(0, 10);
@@ -32,7 +36,7 @@ export const createExpenseFormData = (
   const purchaseDate = new Date(expenseEntity.purchaseDate);
   const expenseFormData = {
     description: expenseEntity.description,
-    value: expenseEntity.amount.value,
+    amount: expenseEntity.amount.value,
     currency: expenseEntity.amount.currency,
     category: expenseEntity.category,
     store: expenseEntity.store,
@@ -49,7 +53,8 @@ export type FeatureViewState = {
 
 @Injectable()
 export class FeatureViewPresenter extends ComponentStore<FeatureViewState> {
-  slideOut = inject(SlideOutService);
+  #slideOut = inject(SlideOutService);
+  #store = inject(Store);
   constructor() {
     super({});
 
@@ -58,42 +63,49 @@ export class FeatureViewPresenter extends ComponentStore<FeatureViewState> {
 
   readonly vm$;
 
-  #store = inject(Store);
-
   readonly addExpense = this.effect(
-    ($: Observable<{ component: Type<unknown>; id: string | null }>) => {
-      return $.pipe(
-        concatMap(({ component, id }) =>
+    (
+      source$: Observable<{
+        id: string | null;
+      }>
+    ) => {
+      return source$.pipe(
+        concatMap(({ id }) =>
           of({
-            expenseFormData: createExpenseFormData(createDefaultExpenseData()),
-            component,
+            expenseEntityData: createDefaultExpenseData(),
           })
         ),
         tapResponse(
-          ({ component, expenseFormData }) => {
-            this.openSlideOut({ component, expenseFormData });
-          },
+          ({ expenseEntityData }) =>
+            this.openExpenseSlideOut({ expenseEntityData }),
           (error) => console.error(error)
         )
       );
     }
   );
 
-  readonly openSlideOut = this.effect(
+  readonly openExpenseSlideOut = this.effect(
     (
-      $: Observable<{
-        component: Type<unknown>;
-        expenseFormData: ExpenseFormData;
+      source$: Observable<{
+        expenseEntityData: ExpensesEntity;
       }>
     ) => {
-      return $.pipe(
-        concatMap(({ component, expenseFormData }) => {
-          return this.slideOut.open(component, expenseFormData).closed;
+      return source$.pipe(
+        concatMap(({ expenseEntityData }) => {
+          const dialogRef = this.#slideOut.open<
+            ExpensesEntity,
+            ExpensesEntity,
+            ManageExpenseFormComponent
+          >(ManageExpenseFormComponent, expenseEntityData);
+
+          return dialogRef.closed;
         }),
         tapResponse(
-          (dialogResult) => {
+          (dialogResult: ExpensesEntity | undefined) => {
             if (dialogResult) {
-              console.log('save expense', dialogResult);
+              this.#store.dispatch(
+                fromActions.addExpense({ expenseData: dialogResult })
+              );
             }
           },
           (error) => console.error(error)

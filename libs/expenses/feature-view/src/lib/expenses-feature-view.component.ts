@@ -27,7 +27,6 @@ export class ExpensesFeatureViewComponent {
 
   public addExpense() {
     this.#featureViewPresenter.addExpense({
-      component: ManageExpenseFormComponent,
       id: null,
     });
   }

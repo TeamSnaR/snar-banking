@@ -13,7 +13,7 @@ export class SlideOutService {
   #slideOutRef: Type<SlideOutRef<any>> = SlideOutRef;
 
   open<TData, TResult, TComponent>(component: Type<TComponent>, data: TData) {
-    const dialogRef = this.#dialog.open(component, {
+    const dialogRef = this.#dialog.open<TResult>(component, {
       positionStrategy: this.#overlay.position().global().end(),
       panelClass: ['pointer-events-auto', 'w-screen', 'max-w-md'],
       data,

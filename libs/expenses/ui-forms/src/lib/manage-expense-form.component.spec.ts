@@ -12,7 +12,7 @@ describe('ManageExpenseFormComponent', () => {
     ({
       id,
       description: 'expenseEntity.description',
-      value: 1,
+      amount: 1,
       currency: 'GBP',
       category: 'Grocery',
       store: 'Lidl',

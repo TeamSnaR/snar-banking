@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { ExpenseFormData } from './expense-form-data';
 import { NgForm } from '@angular/forms';
+import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 
 export type ExpenseFormState = {
   years: number[];
@@ -15,6 +16,7 @@ export type ExpenseFormState = {
   categories: string[];
   locations: string[];
   expenseFormData?: ExpenseFormData;
+  expenseEntityData?: ExpensesEntity;
 };
 const INITIAL_STATE: ExpenseFormState = {
   years: Array.from({ length: 6 }, (_, i) => new Date().getFullYear() - i),
@@ -76,15 +78,30 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
   }
 
   readonly initialize = this.updater(
-    (state, expenseFormData: ExpenseFormData) => ({
-      ...state,
-      purchaseDate: {
-        year: expenseFormData.year,
-        month: expenseFormData.month,
-        day: expenseFormData.day,
-      },
-      expenseFormData,
-    })
+    (state, expenseEntityData: ExpensesEntity) => {
+      const purchaseDate = new Date(expenseEntityData.purchaseDate);
+      const expenseFormData = {
+        description: expenseEntityData.description,
+        amount: expenseEntityData.amount.value,
+        currency: expenseEntityData.amount.currency,
+        category: expenseEntityData.category,
+        store: expenseEntityData.store,
+        purchaseDate: expenseEntityData.purchaseDate,
+        year: purchaseDate.getFullYear(),
+        month: purchaseDate.getMonth() + 1,
+        day: purchaseDate.getDate(),
+      };
+      return {
+        ...state,
+        purchaseDate: {
+          year: purchaseDate.getFullYear(),
+          month: purchaseDate.getMonth(),
+          day: purchaseDate.getDate(),
+        },
+        expenseEntityData,
+        expenseFormData,
+      };
+    }
   );
 
   selectMonth(month: number) {
@@ -106,38 +123,24 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
     return !!expenseForm.valid;
   };
 
-  readonly addExpense = (expenseForm: NgForm): ExpenseFormData => {
-    const expenseToAdd = expenseForm.value;
-    const expenseFormData = this.get().expenseFormData;
-    const expense = {
-      description: expenseToAdd.description,
-      value: +expenseToAdd.amount,
-      currency: expenseFormData!.currency,
-      category: expenseToAdd.category,
-      store: expenseToAdd.store,
-      year: expenseToAdd.year,
-      month: expenseToAdd.month,
-      day: expenseToAdd.day,
+  readonly saveExpense = (expenseForm: NgForm): ExpensesEntity => {
+    const expenseFromForm = expenseForm.value as ExpenseFormData;
+    const expenseEntityData = this.get().expenseEntityData!;
+    const expenseToSave = {
+      ...expenseEntityData,
+      description: expenseFromForm.description,
+      amount: {
+        ...expenseEntityData.amount,
+        value: expenseFromForm.amount,
+      },
+      category: expenseFromForm.category,
+      store: expenseFromForm.store,
       purchaseDate: new Date(
-        expenseToAdd.year,
-        expenseToAdd.month,
-        expenseToAdd.day
+        expenseFromForm.year,
+        expenseFromForm.month,
+        expenseFromForm.day
       ).toISOString(),
     };
-    return expense;
-  };
-
-  readonly resetExpenseForm = (expenseForm: NgForm): void => {
-    const expenseFormData = this.get().expenseFormData;
-    expenseForm.reset({
-      description: expenseFormData?.description,
-      amount: 0,
-      currency: expenseFormData?.currency,
-      category: expenseFormData?.category,
-      store: expenseFormData?.store,
-      year: expenseFormData?.year,
-      month: expenseFormData?.month,
-      day: expenseFormData?.day,
-    });
+    return expenseToSave;
   };
 }
