@@ -9,6 +9,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ExpenseFormStore } from './expense-form.store';
 import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { SlideOutRef } from '@snarbanking-workspace/shared/ui';
 
 @Component({
   selector: 'snarbanking-workspace-manage-expense-form',
@@ -28,7 +29,7 @@ export class ManageExpenseFormComponent implements OnInit {
   // @Output() expenseFormCancel = new EventEmitter<void>();
   #dialogData = inject(DIALOG_DATA);
   #expenseFormStore = inject(ExpenseFormStore);
-  #uiDialogRef = inject(DialogRef);
+  #slideOutRef = inject(SlideOutRef);
   vm$ = this.#expenseFormStore.vm$;
   ngOnInit(): void {
     this.#expenseFormStore.initialize(this.#dialogData);
@@ -39,7 +40,7 @@ export class ManageExpenseFormComponent implements OnInit {
   }
 
   close() {
-    this.#uiDialogRef.close();
+    this.#slideOutRef.close();
   }
 
   save(expenseForm: NgForm) {
@@ -49,7 +50,7 @@ export class ManageExpenseFormComponent implements OnInit {
   submitExpenseForm(expenseForm: NgForm) {
     if (!this.#expenseFormStore.validate(expenseForm)) return;
     const expenseData = this.#expenseFormStore.addExpense(expenseForm);
-    this.#uiDialogRef.close(expenseData);
+    this.#slideOutRef.close(expenseData);
     this.#expenseFormStore.resetExpenseForm(expenseForm);
   }
 

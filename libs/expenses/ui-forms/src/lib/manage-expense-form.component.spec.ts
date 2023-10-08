@@ -3,6 +3,7 @@ import { ManageExpenseFormComponent } from './manage-expense-form.component';
 import { ExpenseFormStore } from './expense-form.store';
 import { ExpenseFormData } from './expense-form-data';
 import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
+import { SlideOutRef } from '@snarbanking-workspace/shared/ui';
 
 describe('ManageExpenseFormComponent', () => {
   let component: ManageExpenseFormComponent;
@@ -31,13 +32,13 @@ describe('ManageExpenseFormComponent', () => {
       imports: [ManageExpenseFormComponent, DialogModule],
       providers: [
         { provide: ExpenseFormStore, useValue: mockExpenseFormStore },
-        { provide: DialogRef, useValue: {} },
+        { provide: SlideOutRef, useValue: {} },
         { provide: DIALOG_DATA, useValue: createExpenseFormData('1') },
       ],
     }).compileComponents();
 
     TestBed.inject(ExpenseFormStore);
-    TestBed.inject(DialogRef);
+    TestBed.inject(SlideOutRef);
     fixture = TestBed.createComponent(ManageExpenseFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
