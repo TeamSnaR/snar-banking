@@ -53,7 +53,16 @@ export const selectExpensesVm = createSelector(
   selectAllExpenses,
   selectExpensesLoaded,
   selectExpensesError,
-  (expenses, loaded, error) => ({ expenses, loaded, error })
+  (expenses, loaded, error) => ({
+    expenses: expenses
+      .map((expense) => ({
+        ...expense,
+        purchaseDate: new Date(expense.purchaseDate),
+      }))
+      .sort((a, b) => b.purchaseDate.getTime() - a.purchaseDate.getTime()),
+    loaded,
+    error,
+  })
 );
 
 export const selectExpenseDetailsVm = createSelector(
