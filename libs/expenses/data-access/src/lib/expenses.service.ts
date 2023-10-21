@@ -27,7 +27,7 @@ export class ExpensesService {
     );
   }
 
-  deleteExpense(id: string) {
-    return of(EMPTY); //this.httpClient.delete<void>(`/api/expenses/${id}`);
+  deleteExpense(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`/api/expenses/${id}`);
   }
 }
