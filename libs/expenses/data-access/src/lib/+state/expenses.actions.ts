@@ -19,7 +19,7 @@ export const setSelectedExpense = createAction(
 );
 export const getExpenseDetails = createAction(
   '[Expense Details Page] Get',
-  emptyProps
+  props<{ id?: string | number }>()
 );
 export const loadExpenseDetailsSuccess = createAction(
   '[Expenses/API] Load Expense Details Success',
@@ -41,5 +41,35 @@ export const addExpenseSuccess = createAction(
 
 export const addExpenseFailure = createAction(
   '[Expenses/API] Add Expense Failure',
+  props<{ error: string }>()
+);
+
+export const updateExpense = createAction(
+  '[Manage Expense Form] Update Expense',
+  props<{ expenseData: ExpensesEntity }>()
+);
+
+export const updateExpenseSuccess = createAction(
+  '[Expenses/API] Update Expense Success',
+  props<{ expense: ExpensesEntity }>()
+);
+
+export const updateExpenseFailure = createAction(
+  '[Expenses/API] Update Expense Failure',
+  props<{ error: string }>()
+);
+
+export const deleteExpense = createAction(
+  '[Manage Expense Form] Delete Expense',
+  props<{ id: string }>()
+);
+
+export const deleteExpenseSuccess = createAction(
+  '[Expenses/API] Delete Expense Success',
+  props<{ id: string }>()
+);
+
+export const deleteExpenseFailure = createAction(
+  '[Expenses/API] Delete Expense Failure',
   props<{ error: string }>()
 );

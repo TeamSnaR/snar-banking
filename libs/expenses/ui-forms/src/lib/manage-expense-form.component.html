@@ -1,4 +1,229 @@
-<form
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+    <div class="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6">
+      <div class="px-4 sm:px-6">
+        <div class="flex items-start justify-between">
+          <h2
+            class="text-base font-semibold leading-6 text-gray-900"
+            id="slide-over-title"
+          >
+            Panel title
+          </h2>
+          <div class="ml-3 flex h-7 items-center">
+            <button
+              type="button"
+              (click)="close()"
+              class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <span class="absolute -inset-2.5"></span>
+              <span class="sr-only">Close panel</span>
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="relative mt-6 flex-1 px-4 sm:px-6">
+        <form #expenseForm="ngForm" class="space-y-6">
+          <div>
+            <label
+              for="amount"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Amount</label
+            >
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
+                <span class="text-gray-500 sm:text-sm">
+                  {{ vm.currency }}
+                </span>
+              </div>
+              <input
+                [(ngModel)]="vm.expenseFormData!.amount"
+                #amount="ngModel"
+                required
+                pattern="^(?=.*[1-9])\d{0,}(?:\.\d{1,2})?$"
+                min="0.00"
+                step="0.01"
+                type="number"
+                name="amount"
+                id="amount"
+                class="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-center"
+                placeholder="0.00"
+                aria-describedby="amount-currency"
+              />
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                <span class="text-gray-500 sm:text-sm" id="amount-currency">
+                  {{ vm.currency | currencySymbol }}
+                </span>
+              </div>
+            </div>
+            <div
+              *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+              class="mt-2 text-sm text-red-600"
+            >
+              <p *ngIf="amount.hasError('required')">Amount is required.</p>
+              <p *ngIf="amount.hasError('pattern')">
+                Amount must be a number greater than 0.00
+              </p>
+            </div>
+          </div>
+          <div>
+            <label
+              for="description"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Description</label
+            >
+            <div class="mt-2">
+              <textarea
+                [(ngModel)]="vm.expenseFormData!.description"
+                id="description"
+                name="description"
+                rows="3"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              ></textarea>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium leading-6 text-gray-900"
+              >Purchase date</label
+            >
+            <fieldset>
+              <legend class="sr-only">Purchase date</legend>
+              <div class="flex items-start justify-start gap-3">
+                <div class="w-full">
+                  <label for="year" class="sr-only">Year</label>
+                  <select
+                    [(ngModel)]="vm.expenseFormData!.year"
+                    required
+                    id="year"
+                    name="year"
+                    (change)="yearSelected($event)"
+                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option *ngFor="let year of vm.years" [value]="year">
+                      {{ year }}
+                    </option>
+                  </select>
+                </div>
+                <div class="w-full">
+                  <label for="month" class="sr-only">Month</label>
+                  <select
+                    [(ngModel)]="vm.expenseFormData!.month"
+                    required
+                    id="month"
+                    name="month"
+                    (change)="monthSelected($event)"
+                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option
+                      *ngFor="let month of vm.months"
+                      [value]="month.value"
+                    >
+                      {{ month.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="w-full">
+                  <label for="day" class="sr-only">Day</label>
+                  <select
+                    [(ngModel)]="vm.expenseFormData!.day"
+                    required
+                    id="day"
+                    name="day"
+                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option *ngFor="let day of vm.days" [value]="day">
+                      {{ day }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div>
+            <label
+              for="category"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Category</label
+            >
+            <select
+              [(ngModel)]="vm.expenseFormData!.category"
+              id="category"
+              name="category"
+              class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            >
+              <option *ngFor="let category of vm.categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="store"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Spent at</label
+            >
+            <select
+              [(ngModel)]="vm.expenseFormData!.store"
+              id="store"
+              name="store"
+              class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            >
+              <option *ngFor="let store of vm.locations" [value]="store">
+                {{ store }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="flex flex-shrink-0 justify-between px-4 py-4">
+      <div>
+        <button
+          *ngIf="vm.mode === 'edit'"
+          type="button"
+          (click)="delete()"
+          class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
+        >
+          Delete
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          (click)="cancel()"
+          class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          (click)="save(expenseForm)"
+          class="ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- <form
   ngForm
   #expenseForm="ngForm"
   class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
@@ -72,67 +297,7 @@
       </div>
 
       <div class="sm:col-span-4">
-        <label class="block text-sm font-medium leading-6 text-gray-900"
-          >Purchase date</label
-        >
-        <fieldset>
-          <legend class="sr-only">Purchase date</legend>
-          <div class="flex items-start justify-start gap-3">
-            <div class="w-full">
-              <label for="year" class="sr-only">Year</label>
-              <select
-                [(ngModel)]="expenseFormData.year"
-                (change)="yearSelected($event)"
-                required
-                id="year"
-                name="year"
-                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                <option
-                  *ngFor="let year of expenseFormStore.years$ | async"
-                  [value]="year"
-                >
-                  {{ year }}
-                </option>
-              </select>
-            </div>
-            <div class="w-full">
-              <label for="month" class="sr-only">Month</label>
-              <select
-                [(ngModel)]="expenseFormData.month"
-                (change)="monthSelected($event)"
-                required
-                id="month"
-                name="month"
-                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                <option
-                  *ngFor="let month of expenseFormStore.months$ | async"
-                  [value]="month.value"
-                >
-                  {{ month.name }}
-                </option>
-              </select>
-            </div>
-            <div class="w-full">
-              <label for="day" class="sr-only">Day</label>
-              <select
-                [(ngModel)]="expenseFormData.day"
-                required
-                id="day"
-                name="day"
-                class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                <option
-                  *ngFor="let day of expenseFormStore.days$ | async"
-                  [value]="day"
-                >
-                  {{ day }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </fieldset>
+
       </div>
       <div class="sm:col-span-4">
         <label
@@ -189,4 +354,4 @@
       </div>
     </div>
   </div>
-</form>
+</form> -->

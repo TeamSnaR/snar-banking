@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { ExpensesEntity } from './+state/expenses.models';
 @Injectable({
   providedIn: 'root',
@@ -18,5 +18,16 @@ export class ExpensesService {
 
   addExpense(expenseData: ExpensesEntity): Observable<string> {
     return this.httpClient.post<string>('/api/expenses', expenseData);
+  }
+
+  updateExpense(expenseData: ExpensesEntity): Observable<void> {
+    return this.httpClient.put<void>(
+      `/api/expenses/${expenseData.id}`,
+      expenseData
+    );
+  }
+
+  deleteExpense(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`/api/expenses/${id}`);
   }
 }

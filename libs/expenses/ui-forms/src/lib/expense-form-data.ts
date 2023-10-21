@@ -5,7 +5,7 @@ export type ExpenseFormData = Omit<
   'id' | 'amount' | 'items'
 > & {
   currency: string;
-  value: number;
+  amount: number;
 } & {
   year: number;
   month: number;

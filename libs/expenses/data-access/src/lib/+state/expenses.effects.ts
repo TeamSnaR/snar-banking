@@ -43,8 +43,8 @@ export class ExpensesEffects {
   expenseDetails = createEffect(() =>
     this.actions$.pipe(
       ofType(ExpensesActions.getExpenseDetails),
-      concatLatestFrom(() => [
-        this.store.select(selectRouteParam('id')),
+      concatLatestFrom(({ id }) => [
+        id ? of(id as string) : this.store.select(selectRouteParam('id')),
         this.store.select(selectExpensesEntities),
       ]),
       switchMap(([, id, entities]) =>
@@ -79,6 +79,44 @@ export class ExpensesEffects {
                 of(ExpensesActions.addExpenseFailure({ error }))
               )
             )
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(ExpensesActions.loadExpensesFailure({ error }));
+      })
+    )
+  );
+
+  updateExpense = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ExpensesActions.updateExpense),
+      concatMap(({ expenseData }) =>
+        this.expensesService.updateExpense(expenseData).pipe(
+          map(() =>
+            ExpensesActions.updateExpenseSuccess({ expense: expenseData })
+          ),
+          catchError((error) =>
+            of(ExpensesActions.updateExpenseFailure({ error }))
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(ExpensesActions.loadExpensesFailure({ error }));
+      })
+    )
+  );
+
+  deleteExpense = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ExpensesActions.deleteExpense),
+      concatMap(({ id }) =>
+        this.expensesService.deleteExpense(id).pipe(
+          map(() => ExpensesActions.deleteExpenseSuccess({ id })),
+          catchError((error) =>
+            of(ExpensesActions.deleteExpenseFailure({ error }))
           )
         )
       ),

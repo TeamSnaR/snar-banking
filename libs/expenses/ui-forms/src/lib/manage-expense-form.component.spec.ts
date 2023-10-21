@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageExpenseFormComponent } from './manage-expense-form.component';
 import { ExpenseFormStore } from './expense-form.store';
 import { ExpenseFormData } from './expense-form-data';
+import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
+import { SlideOutRef } from '@snarbanking-workspace/shared/ui';
 
 describe('ManageExpenseFormComponent', () => {
   let component: ManageExpenseFormComponent;
@@ -10,7 +12,7 @@ describe('ManageExpenseFormComponent', () => {
     ({
       id,
       description: 'expenseEntity.description',
-      value: 1,
+      amount: 1,
       currency: 'GBP',
       category: 'Grocery',
       store: 'Lidl',
@@ -27,16 +29,18 @@ describe('ManageExpenseFormComponent', () => {
   } as unknown as ExpenseFormStore;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManageExpenseFormComponent],
+      imports: [ManageExpenseFormComponent, DialogModule],
       providers: [
         { provide: ExpenseFormStore, useValue: mockExpenseFormStore },
+        { provide: SlideOutRef, useValue: {} },
+        { provide: DIALOG_DATA, useValue: createExpenseFormData('1') },
       ],
     }).compileComponents();
 
     TestBed.inject(ExpenseFormStore);
+    TestBed.inject(SlideOutRef);
     fixture = TestBed.createComponent(ManageExpenseFormComponent);
     component = fixture.componentInstance;
-    component.expenseFormData = createExpenseFormData('1');
     fixture.detectChanges();
   });
 
