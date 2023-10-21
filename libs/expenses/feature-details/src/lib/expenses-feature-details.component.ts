@@ -20,6 +20,6 @@ import { RouterLink } from '@angular/router';
 export class ExpensesFeatureDetailsComponent {
   expenseDetailsVm$ = this.store.select(fromSelectors.selectExpenseDetailsVm);
   constructor(private store: Store) {
-    this.store.dispatch(fromActions.getExpenseDetails());
+    this.store.dispatch(fromActions.getExpenseDetails({}));
   }
 }

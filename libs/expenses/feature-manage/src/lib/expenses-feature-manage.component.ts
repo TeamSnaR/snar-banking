@@ -23,6 +23,6 @@ export class ExpensesFeatureManageComponent {
   expenseFormData$ = this.store.select(fromSelectors.selectExpenseDetailsVm);
 
   constructor() {
-    this.store.dispatch(fromSelectors.getExpenseDetails());
+    this.store.dispatch(fromSelectors.getExpenseDetails({}));
   }
 }

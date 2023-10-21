@@ -30,4 +30,8 @@ export class ExpensesFeatureViewComponent {
       id: null,
     });
   }
+
+  public editExpense(expenseId: number | string) {
+    this.#featureViewPresenter.editExpense(expenseId);
+  }
 }

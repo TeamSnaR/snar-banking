@@ -3,13 +3,15 @@ import { Injectable, Type, inject } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import { SlideOutService } from '@snarbanking-workspace/shared/ui';
-import { Observable, concatMap, of } from 'rxjs';
+import { Observable, concatMap, of, tap } from 'rxjs';
 import { ExpensesEntity } from '@snarbanking-workspace/expenses/data-access';
 import {
   ExpenseFormData,
   ManageExpenseFormComponent,
 } from '@snarbanking-workspace/expenses/ui-forms';
 import * as fromActions from '@snarbanking-workspace/expenses/data-access';
+import * as fromSelectors from '@snarbanking-workspace/expenses/data-access';
+import { concatLatestFrom } from '@ngrx/effects';
 
 export const createDefaultExpenseData: () => ExpensesEntity = () => {
   const today = new Date().toISOString().slice(0, 10);
@@ -84,6 +86,26 @@ export class FeatureViewPresenter extends ComponentStore<FeatureViewState> {
     }
   );
 
+  readonly editExpense = this.effect<string | number>(
+    (source$: Observable<string | number>) =>
+      source$.pipe(
+        tap((id) =>
+          this.#store.dispatch(fromActions.getExpenseDetails({ id }))
+        ),
+        concatLatestFrom((id) =>
+          this.#store.select(fromSelectors.selectEntity)
+        ),
+        tapResponse(
+          ([id, expenseEntityData]) => {
+            if (expenseEntityData) {
+              this.openExpenseSlideOut({ expenseEntityData });
+            }
+          },
+          (error) => console.error(error)
+        )
+      )
+  );
+
   readonly openExpenseSlideOut = this.effect(
     (
       source$: Observable<{
@@ -103,9 +125,16 @@ export class FeatureViewPresenter extends ComponentStore<FeatureViewState> {
         tapResponse(
           (dialogResult: ExpensesEntity | undefined) => {
             if (dialogResult) {
-              this.#store.dispatch(
-                fromActions.addExpense({ expenseData: dialogResult })
-              );
+              console.log(dialogResult);
+              if (String(dialogResult.id).length > 6) {
+                this.#store.dispatch(
+                  fromActions.updateExpense({ expenseData: dialogResult })
+                );
+              } else {
+                this.#store.dispatch(
+                  fromActions.addExpense({ expenseData: dialogResult })
+                );
+              }
             }
           },
           (error) => console.error(error)

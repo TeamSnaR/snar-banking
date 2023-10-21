@@ -19,4 +19,11 @@ export class ExpensesService {
   addExpense(expenseData: ExpensesEntity): Observable<string> {
     return this.httpClient.post<string>('/api/expenses', expenseData);
   }
+
+  updateExpense(expenseData: ExpensesEntity): Observable<void> {
+    return this.httpClient.put<void>(
+      `/api/expenses/${expenseData.id}`,
+      expenseData
+    );
+  }
 }

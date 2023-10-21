@@ -137,7 +137,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       store: expenseFromForm.store,
       purchaseDate: new Date(
         expenseFromForm.year,
-        expenseFromForm.month,
+        expenseFromForm.month - 1,
         expenseFromForm.day
       ).toISOString(),
     };
