@@ -70,6 +70,13 @@ const reducer = createReducer(
   on(ExpensesActions.updateExpenseFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(ExpensesActions.deleteExpenseSuccess, (state, { id }) =>
+    expensesAdapter.removeOne(id, state)
+  ),
+  on(ExpensesActions.deleteExpenseFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 

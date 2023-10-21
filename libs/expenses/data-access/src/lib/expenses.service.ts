@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { ExpensesEntity } from './+state/expenses.models';
 @Injectable({
   providedIn: 'root',
@@ -25,5 +25,9 @@ export class ExpensesService {
       `/api/expenses/${expenseData.id}`,
       expenseData
     );
+  }
+
+  deleteExpense(id: string) {
+    return of(EMPTY); //this.httpClient.delete<void>(`/api/expenses/${id}`);
   }
 }

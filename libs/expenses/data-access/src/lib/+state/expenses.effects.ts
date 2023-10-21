@@ -109,6 +109,24 @@ export class ExpensesEffects {
     )
   );
 
+  deleteExpense = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ExpensesActions.deleteExpense),
+      concatMap(({ id }) =>
+        this.expensesService.deleteExpense(id).pipe(
+          map(() => ExpensesActions.deleteExpenseSuccess({ id })),
+          catchError((error) =>
+            of(ExpensesActions.deleteExpenseFailure({ error }))
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(ExpensesActions.loadExpensesFailure({ error }));
+      })
+    )
+  );
+
   showExpenseAddedNotification = createEffect(
     () =>
       this.actions$.pipe(

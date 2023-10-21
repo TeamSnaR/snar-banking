@@ -70,6 +70,7 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       categories: state.categories,
       locations: state.locations,
       expenseFormData: state.expenseFormData,
+      mode: String(state.expenseEntityData?.id).length > 7 ? 'edit' : 'create',
     })
   );
 
@@ -142,5 +143,10 @@ export class ExpenseFormStore extends ComponentStore<ExpenseFormState> {
       ).toISOString(),
     };
     return expenseToSave;
+  };
+
+  readonly deleteExpense = () => {
+    const expenseEntityData = this.get().expenseEntityData!;
+    return expenseEntityData;
   };
 }

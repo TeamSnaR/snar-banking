@@ -123,16 +123,36 @@ export class FeatureViewPresenter extends ComponentStore<FeatureViewState> {
           return dialogRef.closed;
         }),
         tapResponse(
-          (dialogResult: ExpensesEntity | undefined) => {
+          (
+            dialogResult:
+              | ExpensesEntity
+              | { delete: true; data: ExpensesEntity }
+              | undefined
+          ) => {
             if (dialogResult) {
-              console.log(dialogResult);
-              if (String(dialogResult.id).length > 6) {
+              if (
+                typeof dialogResult === 'object' &&
+                'delete' in dialogResult
+              ) {
                 this.#store.dispatch(
-                  fromActions.updateExpense({ expenseData: dialogResult })
+                  fromActions.deleteExpense({
+                    id: String(dialogResult.data.id),
+                  })
+                );
+              } else if (
+                (dialogResult as ExpensesEntity).id &&
+                String((dialogResult as ExpensesEntity).id).length > 6
+              ) {
+                this.#store.dispatch(
+                  fromActions.updateExpense({
+                    expenseData: dialogResult as ExpensesEntity,
+                  })
                 );
               } else {
                 this.#store.dispatch(
-                  fromActions.addExpense({ expenseData: dialogResult })
+                  fromActions.addExpense({
+                    expenseData: dialogResult as ExpensesEntity,
+                  })
                 );
               }
             }

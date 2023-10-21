@@ -58,3 +58,18 @@ export const updateExpenseFailure = createAction(
   '[Expenses/API] Update Expense Failure',
   props<{ error: string }>()
 );
+
+export const deleteExpense = createAction(
+  '[Manage Expense Form] Delete Expense',
+  props<{ id: string }>()
+);
+
+export const deleteExpenseSuccess = createAction(
+  '[Expenses/API] Delete Expense Success',
+  props<{ id: string }>()
+);
+
+export const deleteExpenseFailure = createAction(
+  '[Expenses/API] Delete Expense Failure',
+  props<{ error: string }>()
+);

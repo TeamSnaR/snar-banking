@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ExpenseFormStore } from './expense-form.store';
 import { CurrencySymbolPipe } from '@snarbanking-workspace/shared/util-pipes';
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { SlideOutRef } from '@snarbanking-workspace/shared/ui';
 
 @Component({
@@ -38,6 +38,11 @@ export class ManageExpenseFormComponent implements OnInit {
 
   save(expenseForm: NgForm) {
     this.submitExpenseForm(expenseForm);
+  }
+
+  delete() {
+    const expenseData = this.#expenseFormStore.deleteExpense();
+    this.#slideOutRef.close({ data: expenseData, delete: true });
   }
 
   submitExpenseForm(expenseForm: NgForm) {
